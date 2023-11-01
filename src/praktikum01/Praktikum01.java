@@ -27,7 +27,7 @@ public class Praktikum01 {
               //obj.perintah.execute("DELETE FROM bahan WHERE id = 'kd01'");
               //String sql = "INSERT INTO bahan VALUE (?, ?, ?, ?)";
               //String sql = "UPDATE bahan set nama=?, kategori=?, qty=? where id=?";
-        //      String sql = "DELETE FROM bahan WHERE id = ?";
+              //String sql = "DELETE FROM bahan WHERE id = ?";
               //PreparedStatement kueri = obj.konekDB.prepareStatement(sql);
               
         //      kueri.setString(1, "kd01");

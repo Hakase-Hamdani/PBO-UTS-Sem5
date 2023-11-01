@@ -77,6 +77,11 @@ public class frameBahan extends javax.swing.JFrame {
         });
 
         jButton3.setText("HAPUS");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -205,6 +210,21 @@ public class frameBahan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e.toString());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            String sqlHapus = "DELETE FROM BAHAN where id = ?";
+            PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlHapus);
+            
+            kueri.setString(1, txtId.getText());
+            
+            kueri.executeUpdate();
+            
+            JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.toString());
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
