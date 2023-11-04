@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 public class framePegawai extends javax.swing.JFrame {
     
     koneksi objekku; //variable objekku
-    DefaultTableModel modelTabelBahan; //this is datasource equivalent in delphi, i guess...
+    DefaultTableModel modelTabelPegawai; //this is datasource equivalent in delphi, i guess...
     /**
      * Creates new form frameBahan
      */
@@ -24,14 +24,14 @@ public class framePegawai extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         objekku = new koneksi();//instance of variable objekku
-        modelTabelBahan = new DefaultTableModel(); //instance/create datasourcenya
-        jTablePegawai.setModel(modelTabelBahan);//koneksi datasource
+        modelTabelPegawai = new DefaultTableModel(); //instance/create datasourcenya
+        jTablePegawai.setModel(modelTabelPegawai);//koneksi datasource
         //menambahkan kolom
-        modelTabelBahan.addColumn("kd_pegawai");
-        modelTabelBahan.addColumn("nama_pegawai");
-        modelTabelBahan.addColumn("kd_jabatan");
-        modelTabelBahan.addColumn("password_admin");
-        modelTabelBahan.addColumn("foto_admin");
+        modelTabelPegawai.addColumn("kd_pegawai");
+        modelTabelPegawai.addColumn("nama_pegawai");
+        modelTabelPegawai.addColumn("kd_jabatan");
+        modelTabelPegawai.addColumn("password_admin");
+        modelTabelPegawai.addColumn("foto_admin");
         
         loadTabelPegawai();
     }
@@ -49,7 +49,7 @@ public class framePegawai extends javax.swing.JFrame {
                 baris[2] = data.getString("kd_jabatan");
                 baris[3] = data.getString("password_pegawai");
                 baris[4] = data.getString("foto_pegawai");
-                modelTabelBahan.addRow(baris);
+                modelTabelPegawai.addRow(baris);
             }
         } catch (Exception e) {
             System.out.print(e.getMessage());

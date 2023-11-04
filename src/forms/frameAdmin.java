@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 public class frameAdmin extends javax.swing.JFrame {
     
     koneksi objekku; //variable objekku
-    DefaultTableModel modelTabelBahan; //this is datasource equivalent in delphi, i guess...
+    DefaultTableModel modelTabelAdmin; //this is datasource equivalent in delphi, i guess...
     /**
      * Creates new form frameBahan
      */
@@ -24,13 +24,13 @@ public class frameAdmin extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         objekku = new koneksi();//instance of variable objekku
-        modelTabelBahan = new DefaultTableModel(); //instance/create datasourcenya
-        jTableAdmin.setModel(modelTabelBahan);//koneksi datasource
+        modelTabelAdmin = new DefaultTableModel(); //instance/create datasourcenya
+        jTableAdmin.setModel(modelTabelAdmin);//koneksi datasource
         //menambahkan kolom
-        modelTabelBahan.addColumn("kd_admin");
-        modelTabelBahan.addColumn("nama_admin");
-        modelTabelBahan.addColumn("username_admin");
-        modelTabelBahan.addColumn("password_admin");
+        modelTabelAdmin.addColumn("kd_admin");
+        modelTabelAdmin.addColumn("nama_admin");
+        modelTabelAdmin.addColumn("username_admin");
+        modelTabelAdmin.addColumn("password_admin");
         
         loadTabelAdmin();
     }
@@ -47,7 +47,7 @@ public class frameAdmin extends javax.swing.JFrame {
                 baris[1] = data.getString("nama_admin");
                 baris[2] = data.getString("username_admin");
                 baris[3] = data.getString("password_admin");
-                modelTabelBahan.addRow(baris);
+                modelTabelAdmin.addRow(baris);
             }
         } catch (Exception e) {
             System.out.print(e.getMessage());
