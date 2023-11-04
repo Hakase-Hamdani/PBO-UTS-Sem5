@@ -13,40 +13,42 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Administrator 10
  */
-public class frameAdmin extends javax.swing.JFrame {
+public class framePegawai extends javax.swing.JFrame {
     
     koneksi objekku; //variable objekku
     DefaultTableModel modelTabelBahan; //this is datasource equivalent in delphi, i guess...
     /**
      * Creates new form frameBahan
      */
-    public frameAdmin() { //konstruktor
+    public framePegawai() { //konstruktor
         initComponents();
         this.setLocationRelativeTo(null);
         objekku = new koneksi();//instance of variable objekku
         modelTabelBahan = new DefaultTableModel(); //instance/create datasourcenya
-        jTableAdmin.setModel(modelTabelBahan);//koneksi datasource
+        jTablePegawai.setModel(modelTabelBahan);//koneksi datasource
         //menambahkan kolom
-        modelTabelBahan.addColumn("kd_admin");
-        modelTabelBahan.addColumn("nama_admin");
-        modelTabelBahan.addColumn("username_admin");
+        modelTabelBahan.addColumn("kd_pegawai");
+        modelTabelBahan.addColumn("nama_pegawai");
+        modelTabelBahan.addColumn("kd_jabatan");
         modelTabelBahan.addColumn("password_admin");
+        modelTabelBahan.addColumn("foto_admin");
         
-        loadTabelAdmin();
+        loadTabelPegawai();
     }
     
-    void loadTabelAdmin(){
+    void loadTabelPegawai(){
         try {
-            String sql = "SELECT * FROM tbl_admin";
+            String sql = "SELECT * FROM tbl_pegawai";
             PreparedStatement kueri = objekku.konekDB.prepareStatement(sql);//mengambil data kueri
             ResultSet data = kueri.executeQuery();//mengambil data, i guess(?)
             
             while(data.next()){ //selama "data" ada
-                Object[] baris = new Object[4];
-                baris[0] = data.getString("kd_admin");
-                baris[1] = data.getString("nama_admin");
-                baris[2] = data.getString("username_admin");
-                baris[3] = data.getString("password_admin");
+                Object[] baris = new Object[5];
+                baris[0] = data.getString("kd_pegawai");
+                baris[1] = data.getString("nama_pegawai");
+                baris[2] = data.getString("kd_jabatan");
+                baris[3] = data.getString("password_pegawai");
+                baris[4] = data.getString("foto_pegawai");
                 modelTabelBahan.addRow(baris);
             }
         } catch (Exception e) {
@@ -73,13 +75,15 @@ public class frameAdmin extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtKd = new javax.swing.JTextField();
         txtNama = new javax.swing.JTextField();
-        txtUsername = new javax.swing.JTextField();
+        txtKdJabatan = new javax.swing.JTextField();
         txtPassword = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTableAdmin = new javax.swing.JTable();
+        jTablePegawai = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        txtFt = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -109,11 +113,11 @@ public class frameAdmin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("kode admin");
+        jLabel1.setText("kode pegawai");
 
-        jLabel2.setText("nama admin");
+        jLabel2.setText("nama pegawai");
 
-        jLabel3.setText("username admin");
+        jLabel3.setText("kd_jabatan");
 
         jLabel4.setText("password");
 
@@ -144,23 +148,25 @@ public class frameAdmin extends javax.swing.JFrame {
             }
         });
 
-        jTableAdmin.setModel(new javax.swing.table.DefaultTableModel(
+        jTablePegawai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
-        jTableAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTablePegawai.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableAdminMouseClicked(evt);
+                jTablePegawaiMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(jTableAdmin);
+        jScrollPane3.setViewportView(jTablePegawai);
+
+        jLabel5.setText("direktori foto");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -170,60 +176,65 @@ public class frameAdmin extends javax.swing.JFrame {
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtKd, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                            .addComponent(txtNama)
-                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(jButton3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5))
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtKd, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                            .addComponent(txtNama)
+                            .addComponent(txtKdJabatan)
+                            .addComponent(txtPassword)
+                            .addComponent(txtFt))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtKd, txtNama, txtPassword, txtUsername});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtKd, txtKdJabatan, txtNama, txtPassword});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtKd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1)
-                            .addComponent(jButton3)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtKd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtKdJabatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtFt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3))
+                .addGap(42, 42, 42))
         );
 
         pack();
@@ -237,19 +248,22 @@ public class frameAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             if (txtKd.getText().isEmpty()){ //jika Id kosong, tampilkan pesan
-                JOptionPane.showMessageDialog(this, "Kode Admin Belum Di isi!");
+                JOptionPane.showMessageDialog(this, "Kode Pegawai Belum Di isi!");
                 txtKd.requestFocus();
             } else if(txtNama.getText().isEmpty()) { //jika Nama kosong, tampilkan pesan
                 JOptionPane.showMessageDialog(this, "Nama Belum Di isi!");
                 txtNama.requestFocus();
-            } else if(txtUsername.getText().isEmpty()){ //jika Kategori kosong, tampilkan pesan
-                JOptionPane.showMessageDialog(this, "Username Belum Di isi!");
-                txtUsername.requestFocus();
+            } else if(txtKdJabatan.getText().isEmpty()){ //jika Kategori kosong, tampilkan pesan
+                JOptionPane.showMessageDialog(this, "Kode Jabatan Belum Di isi!");
+                txtKdJabatan.requestFocus();
             } else if(txtPassword.getText().isEmpty()){ //jika Jumlah kosong, tampilkan pesan
                 JOptionPane.showMessageDialog(this, "Password Belum Di isi!");
                 txtPassword.requestFocus();
+            } else if(txtFt.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Direktori Foto Belum Di isi!");
+                txtFt.requestFocus();
             } else { //jika text box ber isi
-                String sqlCari = "SELECT * FROM tbl_admin WHERE kd_admin = ?"; //cek semua id sebelum input
+                String sqlCari = "SELECT * FROM tbl_pegawai WHERE kd_pegawai = ?"; //cek semua id sebelum input
                 PreparedStatement cari = objekku.konekDB.prepareStatement(sqlCari);
                 cari.setString(1, txtKd.getText());
                 ResultSet hasil = cari.executeQuery();
@@ -257,19 +271,20 @@ public class frameAdmin extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Id bahan SUDAH ADA!");
                     //tampilkan data yang sudah ada sesuai dengan id yang di masukkan
                     txtNama.setText(hasil.getString("nama"));
-                    txtUsername.setText(hasil.getString("username"));
+                    txtKdJabatan.setText(hasil.getString("kd_jabatan"));
                     txtPassword.setText(hasil.getString("password"));
                 } else { //jika id input tidak ada yang sama
-                    String sqlSimpan = "INSERT INTO tbl_admin VALUE (?, ?, ?, ?)";
+                    String sqlSimpan = "INSERT INTO tbl_pegawai VALUE (?, ?, ?, ?, ?)";
                     PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlSimpan);
                 
                     kueri.setString(1, txtKd.getText());
                     kueri.setString(2, txtNama.getText());
-                    kueri.setString(3, txtUsername.getText());
+                    kueri.setString(3, txtKdJabatan.getText());
                     kueri.setString(4, txtPassword.getText());
+                    kueri.setString(5, txtFt.getText());
                     
                     kueri.executeUpdate();
-                    loadTabelAdmin();
+                    loadTabelPegawai();
                     
                     JOptionPane.showMessageDialog(this, "Data Berhasil Di Simpan.");
                 }
@@ -282,15 +297,16 @@ public class frameAdmin extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try {
-            String sqlUbah = "UPDATE tbl_admin set nama_admin=?, username_admin=?, password_admin=? where kd_admin=?";
+            String sqlUbah = "UPDATE tbl_pegawai set nama_pegawai=?, kd_jabatan=?, password_pegawai=?, foto_pegawai=? where kd_pegawai=?";
             PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlUbah);
             
-            kueri.setString(4, txtKd.getText());
+            kueri.setString(5, txtKd.getText());
             kueri.setString(1, txtNama.getText());
-            kueri.setString(2, txtUsername.getText());
+            kueri.setString(2, txtKdJabatan.getText());
             kueri.setString(3, txtPassword.getText());
+            kueri.setString(4, txtFt.getText());
             kueri.executeUpdate();
-            loadTabelAdmin();
+            loadTabelPegawai();
             
             JOptionPane.showMessageDialog(this, "User-sama, data berhasil di ubah.");
             
@@ -301,13 +317,13 @@ public class frameAdmin extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
-            String sqlHapus = "DELETE FROM tbl_admin where kd_admin = ?";
+            String sqlHapus = "DELETE FROM tbl_pegawai where kd_pegawai = ?";
             PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlHapus);
             
             kueri.setString(1, txtKd.getText());
             
             kueri.executeUpdate();
-            loadTabelAdmin();
+            loadTabelPegawai();
             
             JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
         } catch (Exception e) {
@@ -315,18 +331,20 @@ public class frameAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTableAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAdminMouseClicked
-        int i = jTableAdmin.getSelectedRow();
-        String kd_admin = jTableAdmin.getValueAt(i, 0).toString();
-        String nama_admin = jTableAdmin.getValueAt(i, 1).toString();
-        String username_admin = jTableAdmin.getValueAt(i, 2).toString();
-        String password_admin = jTableAdmin.getValueAt(i, 3).toString();
+    private void jTablePegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePegawaiMouseClicked
+        int i = jTablePegawai.getSelectedRow();
+        String kd_pegawai = jTablePegawai.getValueAt(i, 0).toString();
+        String nama_pegawai = jTablePegawai.getValueAt(i, 1).toString();
+        String kd_jabatan = jTablePegawai.getValueAt(i, 2).toString();
+        String password_pegawai = jTablePegawai.getValueAt(i, 3).toString();
+        String foto_pegawai = jTablePegawai.getValueAt(i, 3).toString();
         
-        txtKd.setText(kd_admin);
-        txtNama.setText(nama_admin);
-        txtUsername.setText(username_admin);
-        txtPassword.setText(password_admin);
-    }//GEN-LAST:event_jTableAdminMouseClicked
+        txtKd.setText(kd_pegawai);
+        txtNama.setText(nama_pegawai);
+        txtKdJabatan.setText(kd_jabatan);
+        txtPassword.setText(password_pegawai);
+        txtFt.setText(foto_pegawai);
+    }//GEN-LAST:event_jTablePegawaiMouseClicked
 
     /**
      * @param args the command line arguments
@@ -345,21 +363,23 @@ public class frameAdmin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frameAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(framePegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frameAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(framePegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frameAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(framePegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frameAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(framePegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frameAdmin().setVisible(true);
+                new framePegawai().setVisible(true);
             }
         });
     }
@@ -372,15 +392,17 @@ public class frameAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTableAdmin;
+    private javax.swing.JTable jTablePegawai;
+    private javax.swing.JTextField txtFt;
     private javax.swing.JTextField txtKd;
+    private javax.swing.JTextField txtKdJabatan;
     private javax.swing.JTextField txtNama;
     private javax.swing.JTextField txtPassword;
-    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

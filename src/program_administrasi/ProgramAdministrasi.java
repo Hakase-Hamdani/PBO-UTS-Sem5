@@ -2,20 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package praktikum01;
-import forms.frameBahan;
+package program_administrasi;
+import forms.frameAdmin;
+import forms.frameMain;
 
 /**
  *
  * @author hakase
  */
-public class Praktikum01 {
+public class ProgramAdministrasi {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new frameBahan().setVisible(true);
+        //new frameAdmin().setVisible(true);
+        new frameMain().setVisible(true);
         
         
         // new koneksi();
