@@ -4,7 +4,8 @@
  */
 package program_administrasi;
 import forms.frameAdmin;
-
+import forms.frameJabatan;
+import forms.framePegawai;
 /**
  *
  * @author hakase
@@ -15,6 +16,9 @@ public class ProgramAdministrasi {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        new frameAdmin().setVisible(true);
+        new frameJabatan().setVisible(true);
+        new framePegawai().setVisible(true);
         //new frameAdmin().setVisible(true);
         
         
