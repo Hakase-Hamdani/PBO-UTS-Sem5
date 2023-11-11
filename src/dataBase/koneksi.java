@@ -20,7 +20,7 @@ public class koneksi {
     public koneksi(){
         
         try {
-            String namaDB = "pbo2_revised";
+            String namaDB = "muhammadhamdani_2110010302";
             String username = "root";
             String password = "";
             String url = "jdbc:mysql://localhost/" + namaDB;

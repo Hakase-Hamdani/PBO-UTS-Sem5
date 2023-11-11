@@ -4,7 +4,6 @@
  */
 package program_administrasi;
 import forms.frameAdmin;
-import forms.frameMain;
 
 /**
  *
@@ -17,7 +16,6 @@ public class ProgramAdministrasi {
      */
     public static void main(String[] args) {
         //new frameAdmin().setVisible(true);
-        new frameMain().setVisible(true);
         
         
         // new koneksi();

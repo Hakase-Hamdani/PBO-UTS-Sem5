@@ -254,7 +254,7 @@ public class frameAdmin extends javax.swing.JFrame {
                 cari.setString(1, txtKd.getText());
                 ResultSet hasil = cari.executeQuery();
                 if (hasil.next()){ //jika id input ada
-                    JOptionPane.showMessageDialog(this, "Id bahan SUDAH ADA!");
+                    JOptionPane.showMessageDialog(this, "Kode Admin SUDAH ADA!");
                     //tampilkan data yang sudah ada sesuai dengan id yang di masukkan
                     txtNama.setText(hasil.getString("nama"));
                     txtUsername.setText(hasil.getString("username"));
