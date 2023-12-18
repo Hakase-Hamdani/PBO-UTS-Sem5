@@ -166,4 +166,17 @@ public class dbCrud {
         }
     }
     
+    public void LebarJtable(JTable JTablenya, int[] Lebarnya){
+        TableColumn kolom = new TableColumn();
+        try {
+            JTablenya.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+            for (int i = 0; i < Lebarnya.length; i++) {
+                kolom = JTablenya.getColumnModel().getColumn(i);
+                kolom.setPreferredWidth(Lebarnya[i]);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+    
 }
