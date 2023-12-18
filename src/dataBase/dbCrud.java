@@ -141,7 +141,7 @@ public class dbCrud {
         }
     }
     
-    public void HapusDBAuto(String NamaTabel, String Primarynya, String IsiPrimary){
+    public void HapusDBAuto(String NamaTabel, String Primarynya, String IsiPrimary){ //untuk kueri DELETE
         try {
             String SQLHapus = "DELETE FROM "+NamaTabel+" WHERE "+Primarynya+"='"+IsiPrimary+"'";
             Statement perintah = getKoneksi().createStatement();
@@ -151,6 +151,18 @@ public class dbCrud {
             System.out.println("Data Berhasil Dihapus");
         } catch (Exception e) {
             System.err.println(e.toString());
+        }
+    }
+    
+    public void JudulJTable(JTable JTabelnya, String[] Judulnya){
+        DefaultTableModel modelnya = new DefaultTableModel();
+        try {
+            JTabelnya.setModel(modelnya);
+            for (int i = 0; i < Judulnya.length; i++) {
+                modelnya.addColumn(Judulnya[i]);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
         }
     }
     

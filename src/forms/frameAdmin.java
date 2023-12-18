@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package forms;
+import dataBase.dbCrud;
 import dataBase.koneksi;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
@@ -23,14 +24,17 @@ public class frameAdmin extends javax.swing.JFrame {
     public frameAdmin() { //konstruktor
         initComponents();
         this.setLocationRelativeTo(null);
-        objekku = new koneksi();//instance of variable objekku
-        modelTabelAdmin = new DefaultTableModel(); //instance/create datasourcenya
-        jTableAdmin.setModel(modelTabelAdmin);//koneksi datasource
-        //menambahkan kolom
-        modelTabelAdmin.addColumn("kd_admin");
-        modelTabelAdmin.addColumn("nama_admin");
-        modelTabelAdmin.addColumn("username_admin");
-        modelTabelAdmin.addColumn("password_admin");
+        String[] JudulKolom = {"kd_admin", "nama_admin", "username_admin", "password_admin"};
+        dbCrud obj  = new dbCrud();
+        obj.JudulJTable(jTableAdmin, JudulKolom);
+//        objekku = new koneksi();//instance of variable objekku
+//        modelTabelAdmin = new DefaultTableModel(); //instance/create datasourcenya
+//        jTableAdmin.setModel(modelTabelAdmin);//koneksi datasource
+//        //menambahkan kolom
+//        modelTabelAdmin.addColumn("kd_admin");
+//        modelTabelAdmin.addColumn("nama_admin");
+//        modelTabelAdmin.addColumn("username_admin");
+//        modelTabelAdmin.addColumn("password_admin");
         
         loadTabelAdmin();
     }
