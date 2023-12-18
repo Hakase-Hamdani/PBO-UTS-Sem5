@@ -24,15 +24,16 @@ public class frameAdmin extends javax.swing.JFrame {
     public frameAdmin() { //konstruktor
         initComponents();
         this.setLocationRelativeTo(null);
-        String[] JudulKolom = {"kd_admin", "nama_admin", "username_admin", "password_admin"};
-        int[] lebar ={50, 200, 150, 150};
+        String[] JudulKolom = {"kd_admin", "nama_admin", "username_admin", "password_admin"}; //kolom yang akan di tampilkan
+        int[] lebar ={100, 100, 100, 100}; //lebar masing-masing kolom
         
         dbCrud obj  = new dbCrud();
         
-        obj.JudulJTable(jTableAdmin, JudulKolom); //judul kolom
-        obj.LebarJtable(jTableAdmin, lebar); //lebar kolom
-        
         jTableAdmin.setModel(new DefaultTableModel());
+        String query = "SELECT * FROM tbl_admin";
+        obj.JudulJTable(jTableAdmin, JudulKolom); //judul kolom
+        obj.tampilTable(JudulKolom, query, jTableAdmin); //isi tabel
+        obj.LebarJtable(jTableAdmin, lebar); //lebar kolom
 //        objekku = new koneksi();//instance of variable objekku
 //        modelTabelAdmin = new DefaultTableModel(); //instance/create datasourcenya
 //        jTableAdmin.setModel(modelTabelAdmin);//koneksi datasource
@@ -42,27 +43,27 @@ public class frameAdmin extends javax.swing.JFrame {
 //        modelTabelAdmin.addColumn("username_admin");
 //        modelTabelAdmin.addColumn("password_admin");
         
-        loadTabelAdmin();
+        // loadTabelAdmin();
     }
     
-    void loadTabelAdmin(){
-        try {
-            String sql = "SELECT * FROM tbl_admin";
-            PreparedStatement kueri = objekku.konekDB.prepareStatement(sql);//mengambil data kueri
-            ResultSet data = kueri.executeQuery();//mengambil data, i guess(?)
-            
-            while(data.next()){ //selama "data" ada
-                Object[] baris = new Object[4];
-                baris[0] = data.getString("kd_admin");
-                baris[1] = data.getString("nama_admin");
-                baris[2] = data.getString("username_admin");
-                baris[3] = data.getString("password_admin");
-                modelTabelAdmin.addRow(baris);
-            }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
-    }
+//    void loadTabelAdmin(){
+//        try {
+//            String sql = "SELECT * FROM tbl_admin";
+//            PreparedStatement kueri = objekku.konekDB.prepareStatement(sql);//mengambil data kueri
+//            ResultSet data = kueri.executeQuery();//mengambil data, i guess(?)
+//            
+//            while(data.next()){ //selama "data" ada
+//                Object[] baris = new Object[4];
+//                baris[0] = data.getString("kd_admin");
+//                baris[1] = data.getString("nama_admin");
+//                baris[2] = data.getString("username_admin");
+//                baris[3] = data.getString("password_admin");
+//                modelTabelAdmin.addRow(baris);
+//            }
+//        } catch (Exception e) {
+//            System.out.print(e.getMessage());
+//        }
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -279,7 +280,7 @@ public class frameAdmin extends javax.swing.JFrame {
                     kueri.setString(4, txtPassword.getText());
                     
                     kueri.executeUpdate();
-                    loadTabelAdmin();
+                    // loadTabelAdmin();
                     
                     JOptionPane.showMessageDialog(this, "Data Berhasil Di Simpan.");
                 }
@@ -300,7 +301,7 @@ public class frameAdmin extends javax.swing.JFrame {
             kueri.setString(2, txtUsername.getText());
             kueri.setString(3, txtPassword.getText());
             kueri.executeUpdate();
-            loadTabelAdmin();
+            // loadTabelAdmin();
             
             JOptionPane.showMessageDialog(this, "User-sama, data berhasil di ubah.");
             
@@ -317,7 +318,7 @@ public class frameAdmin extends javax.swing.JFrame {
             kueri.setString(1, txtKd.getText());
             
             kueri.executeUpdate();
-            loadTabelAdmin();
+            // loadTabelAdmin();
             
             JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
         } catch (Exception e) {

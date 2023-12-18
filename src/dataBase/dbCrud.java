@@ -180,7 +180,7 @@ public class dbCrud {
     }
     
     public Object[][] isiTable(String SQL, int jumlah){ //mengambil isi tabel
-        Object[][] data=null;
+        Object[][] data = null;
         try {
             Statement st = getKoneksi().createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -202,6 +202,32 @@ public class dbCrud {
             JOptionPane.showMessageDialog(null, e.toString());
         }
         return data;
+    }
+    
+    public void tampilTable(String Judul[], String SQL, JTable Tabel){
+        try {
+            String title[]= Judul;
+            int jum = title.length;
+            Tabel.setModel(new DefaultTableModel(isiTable(SQL, jum), title));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }
+    
+    public int jumlahRecord(String SQL){
+        int hasil = 0;
+        int i = 0;
+        try {
+            Statement st = getKoneksi().createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+            while (rs.next()){
+                i++;
+            }
+            hasil = i;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        return hasil;
     }
     
 }

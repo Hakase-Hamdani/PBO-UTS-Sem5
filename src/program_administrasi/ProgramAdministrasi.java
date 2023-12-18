@@ -21,18 +21,19 @@ public class ProgramAdministrasi {
         
         //String[] field = {"nama_admin", "username_admin", "password_admin"};
         //String[] isiField = {"Dani", "2103BJM", "083109875456789"};
-        dbCrud obj = new dbCrud();
+        //dbCrud obj = new dbCrud();
         
         //obj.simpanDBAuto("tbl_admin", field, isiField);
         //obj.UbahDBAuto("tbl_admin", "kd_admin", "213", field, isiField);
         //obj.HapusDBAuto("tbl_admin", "kd_admin", "213");
         //System.out.println(obj.getFieldTable(field));
         //System.out.println(obj.getIsiTabel(isiField));
+        //System.out.println(obj.jumlahRecord("SELECT * FROM tbl_admin"));
 
 
 
-        //new frameAdmin().setVisible(true);
-        System.out.print(String.valueOf(obj.isiTable("SELECT * FROM tbl_admin", 3)));
+        new frameAdmin().setVisible(true);
+        //System.out.print(String.valueOf(obj.isiTable("SELECT * FROM tbl_admin", 3)));
         //new frameJabatan().setVisible(true);
         //new framePegawai().setVisible(true);
         //new frameAdmin().setVisible(true);
