@@ -154,7 +154,7 @@ public class dbCrud {
         }
     }
     
-    public void JudulJTable(JTable JTabelnya, String[] Judulnya){
+    public void JudulJTable(JTable JTabelnya, String[] Judulnya){ //membuat kolom tabel otomatis
         DefaultTableModel modelnya = new DefaultTableModel();
         try {
             JTabelnya.setModel(modelnya);
@@ -166,7 +166,7 @@ public class dbCrud {
         }
     }
     
-    public void LebarJtable(JTable JTablenya, int[] Lebarnya){
+    public void LebarJtable(JTable JTablenya, int[] Lebarnya){ //mengatur lebar kolom
         TableColumn kolom = new TableColumn();
         try {
             JTablenya.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
@@ -177,6 +177,31 @@ public class dbCrud {
         } catch (Exception e) {
             System.out.println(e.toString());
         }
+    }
+    
+    public Object[][] isiTable(String SQL, int jumlah){ //mengambil isi tabel
+        Object[][] data=null;
+        try {
+            Statement st = getKoneksi().createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+            
+            rs.last();
+            int baris = rs.getRow(); //ambil baris
+            rs.beforeFirst();
+            
+            int j=0;
+            data = new Object[baris][jumlah];
+            
+            while (rs.next()) { //selama masih ada data baru
+                for (int i = 0; i < jumlah; i++) {
+                    data[j][i]=rs.getString(i+1); //lakukan pengulangan sebanyak jumlah kolom
+                }
+                j++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        return data;
     }
     
 }

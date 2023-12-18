@@ -26,9 +26,13 @@ public class frameAdmin extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         String[] JudulKolom = {"kd_admin", "nama_admin", "username_admin", "password_admin"};
         int[] lebar ={50, 200, 150, 150};
+        
         dbCrud obj  = new dbCrud();
-        obj.JudulJTable(jTableAdmin, JudulKolom);
-        obj.LebarJtable(jTableAdmin, lebar);
+        
+        obj.JudulJTable(jTableAdmin, JudulKolom); //judul kolom
+        obj.LebarJtable(jTableAdmin, lebar); //lebar kolom
+        
+        jTableAdmin.setModel(new DefaultTableModel());
 //        objekku = new koneksi();//instance of variable objekku
 //        modelTabelAdmin = new DefaultTableModel(); //instance/create datasourcenya
 //        jTableAdmin.setModel(modelTabelAdmin);//koneksi datasource
