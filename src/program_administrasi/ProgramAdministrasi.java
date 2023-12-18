@@ -24,7 +24,8 @@ public class ProgramAdministrasi {
         dbCrud obj = new dbCrud();
         
         //obj.simpanDBAuto("tbl_admin", field, isiField);
-        obj.UbahDBAuto("tbl_admin", "kd_admin", "213", field, isiField);
+        //obj.UbahDBAuto("tbl_admin", "kd_admin", "213", field, isiField);
+        //obj.HapusDBAuto("tbl_admin", "kd_admin", "213");
         System.out.println(obj.getFieldTable(field));
         System.out.println(obj.getIsiTabel(isiField));
 

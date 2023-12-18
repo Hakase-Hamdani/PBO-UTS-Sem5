@@ -141,4 +141,17 @@ public class dbCrud {
         }
     }
     
+    public void HapusDBAuto(String NamaTabel, String Primarynya, String IsiPrimary){
+        try {
+            String SQLHapus = "DELETE FROM "+NamaTabel+" WHERE "+Primarynya+"='"+IsiPrimary+"'";
+            Statement perintah = getKoneksi().createStatement();
+            perintah.executeUpdate(SQLHapus);
+            perintah.close();
+            getKoneksi().close();
+            System.out.println("Data Berhasil Dihapus");
+        } catch (Exception e) {
+            System.err.println(e.toString());
+        }
+    }
+    
 }
