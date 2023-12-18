@@ -110,4 +110,35 @@ public class dbCrud {
         }
     }
     
+    public String getEditFieldValue(String[] Field, String[] ValueField){ //mengubah value berbentuk array untuk diproses sebagai value dalam kueri UPDATE
+        String hasil = "";
+        int deteksi = Field.length-1;
+        try {
+            for (int i = 0; i < Field.length; i++) {
+                if ( i == deteksi) {
+                    hasil = hasil + Field[i]+"='"+ValueField[i]+"'";
+                } else {
+                    hasil = hasil + Field[i]+"='"+ValueField[i]+"', ";
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return  hasil;
+    }
+    
+    public void UbahDBAuto (String NamaTabel, String NamaPrimary, String IsiPrimary, String[]Field, String[] ValueField){ //memasukkan data dari getEditValue menjadi kueri UPDATE
+        try {
+            String SQLEdit = "UPDATE "+NamaTabel+" SET "+getEditFieldValue(Field, ValueField)+" WHERE "+NamaPrimary+"='"+IsiPrimary+"'";
+            Statement perintah = getKoneksi().createStatement();
+            perintah.executeUpdate(SQLEdit);
+            perintah.close();
+            getKoneksi().close();
+            System.err.println("Data Berhasil diubah");
+            System.err.println(SQLEdit);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+    
 }

@@ -19,11 +19,12 @@ public class ProgramAdministrasi {
     public static void main(String[] args) {
 
         
-        String[] field = {"kd_admin", "nama_admin", "username_admin", "password_admin"};
-        String[] isiField = {"213", "Dani", "2103BJM", "0831"};
+        String[] field = {"nama_admin", "username_admin", "password_admin"};
+        String[] isiField = {"Dani", "2103BJM", "083109875456789"};
         dbCrud obj = new dbCrud();
         
-        obj.simpanDBAuto("tbl_admin", field, isiField);
+        //obj.simpanDBAuto("tbl_admin", field, isiField);
+        obj.UbahDBAuto("tbl_admin", "kd_admin", "213", field, isiField);
         System.out.println(obj.getFieldTable(field));
         System.out.println(obj.getIsiTabel(isiField));
 
