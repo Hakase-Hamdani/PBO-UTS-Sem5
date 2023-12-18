@@ -23,6 +23,7 @@ public class ProgramAdministrasi {
         //String[] isiField = {"Dani", "2103BJM", "083109875456789"};
         //dbCrud obj = new dbCrud();
         
+        
         //obj.simpanDBAuto("tbl_admin", field, isiField);
         //obj.UbahDBAuto("tbl_admin", "kd_admin", "213", field, isiField);
         //obj.HapusDBAuto("tbl_admin", "kd_admin", "213");
@@ -33,6 +34,7 @@ public class ProgramAdministrasi {
 
 
         new frameAdmin().setVisible(true);
+        //obj.tampilLaporan("/src/report/lapAdmin.jrxml", "SELECT * FROM tbl_admin");
         //System.out.print(String.valueOf(obj.isiTable("SELECT * FROM tbl_admin", 3)));
         //new frameJabatan().setVisible(true);
         //new framePegawai().setVisible(true);

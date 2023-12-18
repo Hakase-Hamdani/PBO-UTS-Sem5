@@ -13,6 +13,7 @@ import java.io.File;
 import java.net.ConnectException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -228,6 +229,23 @@ public class dbCrud {
             JOptionPane.showMessageDialog(null, e.toString());
         }
         return hasil;
+    }
+    
+    public void tampilLaporan(String laporanFile, String SQL){
+        try {
+            File file = new File(laporanFile);
+            JasperDesign jasDes = JRXmlLoader.load(file);
+            
+            JRDesignQuery sqlQuery = new JRDesignQuery();
+            sqlQuery.setText(SQL);
+            jasDes.setQuery(sqlQuery);
+            
+            JasperReport JR = JasperCompileManager.compileReport(jasDes);
+            JasperPrint JP = JasperFillManager.fillReport(JR, null, getKoneksi());
+            JasperViewer.viewReport(JP);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
     }
     
 }
