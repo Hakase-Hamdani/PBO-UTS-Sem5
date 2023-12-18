@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package program_administrasi;
+import dataBase.dbCrud;
 import forms.frameAdmin;
 import forms.frameJabatan;
 import forms.framePegawai;
@@ -16,9 +17,21 @@ public class ProgramAdministrasi {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new frameAdmin().setVisible(true);
-        new frameJabatan().setVisible(true);
-        new framePegawai().setVisible(true);
+
+        
+        String[] field = {"kd_admin", "nama_admin", "username_admin", "password_admin"};
+        String[] isiField = {"213", "Dani", "2103BJM", "0831"};
+        dbCrud obj = new dbCrud();
+        
+        obj.simpanDBAuto("tbl_admin", field, isiField);
+        System.out.println(obj.getFieldTable(field));
+        System.out.println(obj.getIsiTabel(isiField));
+
+
+
+        //new frameAdmin().setVisible(true);
+        //new frameJabatan().setVisible(true);
+        //new framePegawai().setVisible(true);
         //new frameAdmin().setVisible(true);
         
         

@@ -3,18 +3,61 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package forms;
+import dataBase.koneksi;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Administrator 10
  */
 public class frameSppd extends javax.swing.JFrame {
-
-    /**
-     * Creates new form frameSuratMasuk
-     */
+    koneksi objekku;
+    DefaultTableModel modelTabelSppd;
     public frameSppd() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        objekku = new koneksi();
+        jTableSppd.setModel(modelTabelSppd);
+        
+        modelTabelSppd.addColumn("kd_sppd");
+        modelTabelSppd.addColumn("no_sppd");
+        modelTabelSppd.addColumn("kd_pegawai");
+        modelTabelSppd.addColumn("tgl_sppd");
+        modelTabelSppd.addColumn("tempat_sppd");
+        modelTabelSppd.addColumn("kendaraan_sppd");
+        modelTabelSppd.addColumn("biaya_sppd");
+        modelTabelSppd.addColumn("tgl_inputsppd");
+        modelTabelSppd.addColumn("kd_admin");
+        modelTabelSppd.addColumn("scan_sppd");
+    }
+    
+    void loadTableSppd(){
+        try {
+            String sql = "SELECT * FROM tbl_sppd";
+            PreparedStatement kueri = objekku.konekDB.prepareCall(sql);
+            ResultSet data = kueri.executeQuery();
+            
+            while (data.next()){
+                Object[] baris = new Object[10];
+                baris[0] = data.getString("kd_sppd");
+                baris[1] = data.getString("no_sppd");
+                baris[2] = data.getString("kd_pegawai");
+                baris[3] = data.getString("tgl_sppd");
+                baris[4] = data.getString("tempat_sppd");
+                baris[5] = data.getString("kendaraan_sppd");
+                baris[6] = data.getString("biaya_sppd");
+                baris[7] = data.getString("tgl_inputsppd");
+                baris[8] = data.getString("kd_admin");
+                baris[9] = data.getString("scan_sppd");
+                
+                modelTabelSppd.addRow(baris);
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     /**
@@ -43,7 +86,7 @@ public class frameSppd extends javax.swing.JFrame {
         txt_biaya = new javax.swing.JTextField();
         txt_kodeadmin = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableSppd = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         txta_tempat = new javax.swing.JTextArea();
         btnSimpan = new javax.swing.JButton();
@@ -52,7 +95,7 @@ public class frameSppd extends javax.swing.JFrame {
         txt_scan = new javax.swing.JTextField();
         txt_no_sppd = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        txt_sppd = new javax.swing.JTextField();
+        txt_tgl_sppd = new javax.swing.JTextField();
         txt_sppd_in = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
 
@@ -108,7 +151,7 @@ public class frameSppd extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableSppd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -116,7 +159,12 @@ public class frameSppd extends javax.swing.JFrame {
                 "kode", "nomor", "kode pegawai", "tanggal", "tempat", "kendaraan", "biaya", "tanggal input", "kode admin", "scan"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jTableSppd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableSppdMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableSppd);
 
         txta_tempat.setColumns(20);
         txta_tempat.setRows(5);
@@ -155,12 +203,12 @@ public class frameSppd extends javax.swing.JFrame {
             }
         });
 
-        jLabel13.setText("*dalam format tahun-bulan-tanggal (tttt-bb-hh)");
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
+        jLabel13.setText("*dalam format tahun-bulan-tanggal (tttt-bb-hh)");
 
-        txt_sppd.addActionListener(new java.awt.event.ActionListener() {
+        txt_tgl_sppd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_sppdActionPerformed(evt);
+                txt_tgl_sppdActionPerformed(evt);
             }
         });
 
@@ -211,7 +259,7 @@ public class frameSppd extends javax.swing.JFrame {
                                             .addComponent(txt_sppd_in, javax.swing.GroupLayout.Alignment.TRAILING)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(36, 36, 36)
-                                        .addComponent(txt_sppd, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))))))
+                                        .addComponent(txt_tgl_sppd, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,7 +298,7 @@ public class frameSppd extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(txt_sppd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_tgl_sppd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel13)
                         .addGap(23, 23, 23)
@@ -311,15 +359,112 @@ public class frameSppd extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_kodeadminActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (txt_kd_sppd.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Kode SPPD Belum Di Isi!");
+                txt_kd_sppd.requestFocus();
+            } else if (txt_no_sppd.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No SPPD Belum Di Isi!");
+                txt_no_sppd.requestFocus();
+            } else if (txt_kd_pegawai.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Kode Pegawai Belum Di Isi!");
+                txt_kd_pegawai.requestFocus();
+            } else if (txt_tgl_sppd.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Tanggal SPPD Belum Di Isi!");
+                txt_tgl_sppd.requestFocus();
+            } else if (txta_tempat.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Tempat SPPD Belum Di Isi!");
+                txta_tempat.requestFocus();
+            } else if (txt_kendaraan.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Kendaraan SPPD Belum Di Isi!");
+                txt_kendaraan.requestFocus();
+            } else if (txt_biaya.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Biaya SPPD Belum Di Isi!");
+                txt_biaya.requestFocus();
+            } else if (txt_sppd_in.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Tanggal Input SPPD Belum Di Isi!");
+                txt_sppd_in.requestFocus();
+            } else if (txt_kodeadmin.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Kode Admin Belum Di Isi!");
+                txt_kodeadmin.requestFocus();
+            } else if (txt_scan.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Scan SPPD Belum Di Isi!");
+                txt_scan.requestFocus();
+            } else {
+                String sqlCari = "SELECT * FROM tbl_sppd WHERE kd_sppd = ?";
+                PreparedStatement cari = objekku.konekDB.prepareStatement(sqlCari);
+                cari.setString(1, txt_kd_sppd.getText());
+                ResultSet hasil = cari.executeQuery();
+                if (hasil.next()){
+                    JOptionPane.showMessageDialog(this, "Kode SPPD SUDAH ADA!");
+                    txt_kd_sppd.setText(hasil.getString("kd_sppd"));
+                    txt_no_sppd.setText(hasil.getString("no_sppd"));
+                    txt_kd_pegawai.setText(hasil.getString("kd_pegawai"));
+                    txt_tgl_sppd.setText(hasil.getString("tgl_sppd"));
+                    txta_tempat.setText(hasil.getString("tempat_sppd"));
+                    txt_kendaraan.setText(hasil.getString("kendaraan_sppd"));
+                    txt_biaya.setText(hasil.getString("biaya_sppd"));
+                    txt_sppd_in.setText(hasil.getString("tgl_inputsppd"));
+                    txt_kodeadmin.setText(hasil.getString("kd_admin"));
+                    txt_scan.setText(hasil.getString("scan_sppd"));
+                } else {
+                    String sqlSimpan = "INSERT INTO tbl_sppd VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlSimpan);
+                    
+                    kueri.setString(1, txt_kd_sppd.getText());
+                    kueri.setString(2, txt_no_sppd.getText());
+                    kueri.setString(3, txt_kd_pegawai.getText());
+                    kueri.setString(4, txt_tgl_sppd.getText());
+                    kueri.setString(5, txta_tempat.getText());
+                    kueri.setString(6, txt_kendaraan.getText());
+                    kueri.setString(7, txt_biaya.getText());
+                    kueri.setString(8, txt_sppd_in.getText());
+                    kueri.setString(9, txt_kodeadmin.getText());
+                    kueri.setString(10, txt_scan.getText());
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.toString());
+        }
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
-        // TODO add your handling code here:
+        try {
+            String sqlUbah = "UPDATE tbl_sddp SET no_sppd = ?, kd_pegawai = ?, tgl_sppd = ?, tempat_sppd = ?, kendaraan_sppd = ?, biaya_sppd = ? tgl_inputsppd = ?, kd_admin = ?, scan_sppd = ? WHERE kd_sppd = ?";
+            PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlUbah);
+            
+            kueri.setString(1, txt_kd_sppd.getText());
+            kueri.setString(2, txt_no_sppd.getText());
+            kueri.setString(3, txt_kd_pegawai.getText());
+            kueri.setString(4, txt_tgl_sppd.getText());
+            kueri.setString(5, txta_tempat.getText());
+            kueri.setString(6, txt_kendaraan.getText());
+            kueri.setString(7, txt_biaya.getText());
+            kueri.setString(8, txt_sppd_in.getText());
+            kueri.setString(9, txt_kodeadmin.getText());
+            kueri.setString(10, txt_scan.getText());
+            
+            kueri.executeUpdate();
+            loadTableSppd();
+            JOptionPane.showMessageDialog(this, "Data Berhasil di Ubah!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.toString());
+        }
     }//GEN-LAST:event_btnUbahActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
-        // TODO add your handling code here:
+        try {
+            String sqlHapus = "DELETE FROM tbl_sppd WHERE kd_sppd = ?";
+            PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlHapus);
+            kueri.setString(1, txt_kd_sppd.getText());
+        
+            kueri.executeUpdate();
+            loadTableSppd();
+            JOptionPane.showMessageDialog(this, "Data Berhasil Di Hapus!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.toString());
+        }
+ 
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void txt_scanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_scanActionPerformed
@@ -330,13 +475,38 @@ public class frameSppd extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_no_sppdActionPerformed
 
-    private void txt_sppdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sppdActionPerformed
+    private void txt_tgl_sppdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tgl_sppdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_sppdActionPerformed
+    }//GEN-LAST:event_txt_tgl_sppdActionPerformed
 
     private void txt_sppd_inActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sppd_inActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_sppd_inActionPerformed
+
+    private void jTableSppdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSppdMouseClicked
+        int i = jTableSppd.getSelectedRow();
+        String kd_sppd = jTableSppd.getValueAt(i,0).toString();
+        String no_sppd = jTableSppd.getValueAt(i,1).toString();
+        String kd_pegawai = jTableSppd.getValueAt(i,2).toString();
+        String tgl_sppd = jTableSppd.getValueAt(i,3).toString();
+        String tempat_sppd = jTableSppd.getValueAt(i,4).toString();
+        String kendaraan_sppd = jTableSppd.getValueAt(i,5).toString();
+        String biaya_sppd = jTableSppd.getValueAt(i,6).toString();
+        String tgl_inputppd = jTableSppd.getValueAt(i,7).toString();
+        String kd_admin = jTableSppd.getValueAt(i,8).toString();
+        String scan_sppd = jTableSppd.getValueAt(i,9).toString();
+        
+        txt_kd_sppd.setText(kd_sppd);
+        txt_no_sppd.setText(no_sppd);
+        txt_kd_pegawai.setText(kd_pegawai);
+        txt_tgl_sppd.setText(tgl_sppd);
+        txta_tempat.setText(tempat_sppd);
+        txt_kendaraan.setText(kendaraan_sppd);
+        txt_biaya.setText(biaya_sppd);
+        txt_sppd_in.setText(tgl_inputppd);
+        txt_kodeadmin.setText(kd_admin);
+        txt_scan.setText(scan_sppd);
+    }//GEN-LAST:event_jTableSppdMouseClicked
 
     /**
      * @param args the command line arguments
@@ -393,7 +563,7 @@ public class frameSppd extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableSppd;
     private javax.swing.JTextField txt_biaya;
     private javax.swing.JTextField txt_kd_pegawai;
     private javax.swing.JTextField txt_kd_sppd;
@@ -401,8 +571,8 @@ public class frameSppd extends javax.swing.JFrame {
     private javax.swing.JTextField txt_kodeadmin;
     private javax.swing.JTextField txt_no_sppd;
     private javax.swing.JTextField txt_scan;
-    private javax.swing.JTextField txt_sppd;
     private javax.swing.JTextField txt_sppd_in;
+    private javax.swing.JTextField txt_tgl_sppd;
     private javax.swing.JTextArea txta_tempat;
     // End of variables declaration//GEN-END:variables
 }

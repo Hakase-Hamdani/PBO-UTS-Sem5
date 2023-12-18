@@ -3,18 +3,65 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package forms;
-
+import dataBase.koneksi;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Administrator 10
  */
 public class frameSuratMasuk extends javax.swing.JFrame {
 
-    /**
-     * Creates new form frameSuratMasuk
-     */
+    koneksi objekku;
+    DefaultTableModel modelTabelSMasuk;
     public frameSuratMasuk() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        objekku = new koneksi();
+        modelTabelSMasuk = new DefaultTableModel();
+        jTableSKeluar.setModel(modelTabelSMasuk);
+        
+        modelTabelSMasuk.addColumn("kd_suratmasuk");
+        modelTabelSMasuk.addColumn("tgl_input");
+        modelTabelSMasuk.addColumn("no_surat");
+        modelTabelSMasuk.addColumn("pengirim");
+        modelTabelSMasuk.addColumn("perihal");
+        modelTabelSMasuk.addColumn("scan");
+        modelTabelSMasuk.addColumn("kd_pegawai");
+        modelTabelSMasuk.addColumn("tgl_disposisi");
+        modelTabelSMasuk.addColumn("kd_jabatan");
+        modelTabelSMasuk.addColumn("keterangan");
+        modelTabelSMasuk.addColumn("kd_admin");
+        
+    }
+    
+    void loadTabelSMasuk(){
+        try{
+            String sql = "SELECT * FROM tbl_suratmasuk";
+            PreparedStatement kueri = objekku.konekDB.prepareStatement(sql);
+            ResultSet data = kueri.executeQuery();
+            
+            while(data.next()){
+                Object[] baris = new Object[11];
+                baris[0] = data.getString("");
+                baris[1] = data.getString("");
+                baris[2] = data.getString("");
+                baris[3] = data.getString("");
+                baris[4] = data.getString("");
+                baris[5] = data.getString("");
+                baris[6] = data.getString("");
+                baris[7] = data.getString("");
+                baris[8] = data.getString("");
+                baris[9] = data.getString("");
+                baris[10] = data.getString("");
+                
+                modelTabelSMasuk.addRow(baris);
+            }
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+        }
     }
 
     /**
@@ -46,7 +93,7 @@ public class frameSuratMasuk extends javax.swing.JFrame {
         txt_kodejabatan = new javax.swing.JTextField();
         txt_kdadmin = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableSKeluar = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         txta_perihal = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -125,7 +172,7 @@ public class frameSuratMasuk extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableSKeluar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -133,7 +180,12 @@ public class frameSuratMasuk extends javax.swing.JFrame {
                 "kode", "tanggal input", "nomor surat", "pengirim", "perihal", "scan file", "kode pegawail", "tanggal disposisi", "kode jabatan", "keterangan", "kode admin"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jTableSKeluar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableSKeluarMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableSKeluar);
 
         txta_perihal.setColumns(20);
         txta_perihal.setRows(5);
@@ -330,15 +382,124 @@ public class frameSuratMasuk extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_kdadminActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (txt_kd_masuk.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Kode Surat Mausk Belum Di Masukkan!");
+                txt_kd_masuk.requestFocus();
+            } else if (txt_tgl_masuk.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Tanggal Masuk Belum Di Masukkan!");
+                txt_tgl_masuk.requestFocus();
+            } else if (txt_no_masuk.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Nomor Surat Belum Di Masukkan!");
+                txt_no_masuk.requestFocus();
+            } else if (txt_pengirim.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Pengirim Surat Belum Di Masukkan!");
+                txt_pengirim.requestFocus();
+            } else if (txta_perihal.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Perihal Surat Belum Di Masukkan!");
+                txta_perihal.requestFocus();
+            } else if (txt_scan.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Scan Surat Belum Di Masukkan!");
+                txt_scan.requestFocus();
+            } else if (txt_kodepegawai.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Kode Pegawai Belum Di Masukkan!");
+                txt_kodepegawai.requestFocus();
+            } else if (txt_tgl_disposisi.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Tanggal Disposisi Belum Di Masukkan!");
+                txt_tgl_disposisi.requestFocus();
+            } else if (txt_kodejabatan.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Kode Jabatan Belum Di Masukkan!");
+                txt_kodejabatan.requestFocus();
+            } else if (txta_ket.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Keterangan Surat Belum Di Masukkan!");
+                txta_ket.requestFocus();
+            } else if (txt_kdadmin.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Tanggal Masuk Belum Di Masukkan!");
+                txt_kdadmin.requestFocus();
+            } else {
+                String sqlCari = "SELECT * FROM tbl_suratmasuk WHERE kd_suratmasuk = ?";
+                PreparedStatement cari = objekku.konekDB.prepareStatement(sqlCari);
+                cari.setString(1, txt_kd_masuk.getText());
+                ResultSet hasil = cari.executeQuery();
+                
+                if (hasil.next()){
+                    JOptionPane.showMessageDialog(this, "Kode Surat Masuk Sudah Ada!");
+                    txt_kd_masuk.setText(hasil.getString("kd_suratmasuk"));
+                    txt_tgl_masuk.setText(hasil.getString("tgl_inputsuratmasuk"));
+                    txt_no_masuk.setText(hasil.getString("no_suratmasuk"));
+                    txt_pengirim.setText(hasil.getString("pengirim_suratmasuk"));
+                    txta_perihal.setText(hasil.getString("perihal_suratmasuk"));
+                    txt_scan.setText(hasil.getString("scan_suratmasuk"));
+                    txt_kodepegawai.setText(hasil.getString("kd_pegawai"));
+                    txt_tgl_disposisi.setText(hasil.getString("tgl_disposisi"));
+                    txt_kodejabatan.setText(hasil.getString("kd_jabatan"));
+                    txta_ket.setText(hasil.getString("keterangan"));
+                    txt_kdadmin.setText(hasil.getString("kd_admin"));
+                } else {
+                    String sqlSimpan = "INSERT INTO tbl_surat masuk VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlSimpan);
+                    
+                    kueri.setString(1, txt_kd_masuk.getText());
+                    kueri.setString(2, txt_tgl_masuk.getText());
+                    kueri.setString(3, txt_no_masuk.getText());
+                    kueri.setString(4, txt_pengirim.getText());
+                    kueri.setString(5, txta_perihal.getText());
+                    kueri.setString(6, txt_scan.getText());
+                    kueri.setString(7, txt_kodepegawai.getText());
+                    kueri.setString(8, txt_tgl_disposisi.getText());
+                    kueri.setString(9, txt_kodejabatan.getText());
+                    kueri.setString(10, txta_ket.getText());
+                    kueri.setString(11, txt_kdadmin.getText());
+                    
+                    kueri.executeUpdate();
+                    loadTabelSMasuk();
+                    JOptionPane.showMessageDialog(this, "Data Berhasil Di Simpan!");
+                }
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
-        // TODO add your handling code here:
+        try {
+            String sqlUbah = "UPDATE tbl_suratmasuk SET tgl_inputsuratmasuk = ?, no_suratmasuk = ?, pengirim_suratmasuk = ?, perihal_suratmasuk = ?, scan_suratmasuk = ?, kd_pegawai = ?, tgl_disposisi = ?, kd_jabatan = ?, keterangan = ?, kd_admin = ? WHERE kd_suratmasuk = ?";
+            PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlUbah);
+            
+            kueri.setString(11, txt_kd_masuk.getText());
+            kueri.setString(1, txt_tgl_masuk.getText());
+            kueri.setString(2, txt_no_masuk.getText());
+            kueri.setString(3, txt_pengirim.getText());
+            kueri.setString(4, txta_perihal.getText());
+            kueri.setString(5, txt_scan.getText());
+            kueri.setString(6, txt_kodepegawai.getText());
+            kueri.setString(7, txt_tgl_disposisi.getText());
+            kueri.setString(8, txt_kodejabatan.getText());
+            kueri.setString(9, txta_ket.getText());
+            kueri.setString(10, txt_kdadmin.getText());
+            kueri.executeUpdate();
+            loadTabelSMasuk();
+            
+            JOptionPane.showMessageDialog(this, "Data Berhasil Di Ubah!");
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.toString());
+        }
+ 
     }//GEN-LAST:event_btnUbahActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
-        // TODO add your handling code here:
+        try {
+            String sqlHapus = "DELETE FROM tbl_suratmasuk WHERE kd_suratmasuk = ?";
+            PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlHapus);
+            
+            kueri.setString(1, txt_kd_masuk.getText());
+            
+            kueri.executeUpdate();
+            loadTabelSMasuk();
+            JOptionPane.showMessageDialog(this, "Data Berhasil Di Hapus!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.toString());
+        }
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void txt_tgl_masukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tgl_masukActionPerformed
@@ -348,6 +509,33 @@ public class frameSuratMasuk extends javax.swing.JFrame {
     private void txt_tgl_disposisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tgl_disposisiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_tgl_disposisiActionPerformed
+
+    private void jTableSKeluarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSKeluarMouseClicked
+        int i = jTableSKeluar.getSelectedRow();
+        String kd_suratmasuk = jTableSKeluar.getValueAt(i, 0).toString();
+        String tgl_inputsuratmasuk = jTableSKeluar.getValueAt(i, 1).toString();
+        String no_suratmasuk = jTableSKeluar.getValueAt(i, 2).toString();
+        String pengirim_suratmasuk = jTableSKeluar.getValueAt(i, 3).toString();
+        String perihal_suratmasuk = jTableSKeluar.getValueAt(i, 4).toString();
+        String scan_suratmasuk = jTableSKeluar.getValueAt(i, 5).toString();
+        String kd_pegawai = jTableSKeluar.getValueAt(i, 6).toString();
+        String tgl_disposisi = jTableSKeluar.getValueAt(i, 7).toString();
+        String kd_jabatan = jTableSKeluar.getValueAt(i, 8).toString();
+        String keterangan = jTableSKeluar.getValueAt(i, 9).toString();
+        String kd_admin = jTableSKeluar.getValueAt(i, 10).toString();
+        
+        txt_kd_masuk.setText(kd_suratmasuk);
+        txt_tgl_masuk.setText(tgl_inputsuratmasuk);
+        txt_no_masuk.setText(no_suratmasuk);
+        txt_pengirim.setText(pengirim_suratmasuk);
+        txta_perihal.setText(perihal_suratmasuk);
+        txt_scan.setText(scan_suratmasuk);
+        txt_kodepegawai.setText(kd_pegawai);
+        txt_tgl_disposisi.setText(tgl_disposisi);
+        txt_kodejabatan.setText(kd_jabatan);
+        txta_ket.setText(keterangan);
+        txt_kdadmin.setText(kd_admin);
+    }//GEN-LAST:event_jTableSKeluarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -405,7 +593,7 @@ public class frameSuratMasuk extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableSKeluar;
     private javax.swing.JTextField txt_kd_masuk;
     private javax.swing.JTextField txt_kdadmin;
     private javax.swing.JTextField txt_kodejabatan;

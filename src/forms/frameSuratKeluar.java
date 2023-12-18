@@ -54,6 +54,7 @@ public class frameSuratKeluar extends javax.swing.JFrame {
                 baris[5] = data.getString("scan_suratkeluar");
                 baris[6] = data.getString("tgl_inputsuratkeluar");
                 baris[7] = data.getString("kd_admin");
+                modelTabelSKeluar.addRow(baris);
             }
         } catch(Exception e) {
             System.out.print(e.getMessage()); 
@@ -147,6 +148,11 @@ public class frameSuratKeluar extends javax.swing.JFrame {
                 "kode", "tanggal", "nomor surat", "tujuan", "perihal", "scan file", "kode admin"
             }
         ));
+        jTableSKeluar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableSKeluarMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableSKeluar);
 
         txta_perihal_suratkeluar.setColumns(20);
@@ -378,6 +384,7 @@ public class frameSuratKeluar extends javax.swing.JFrame {
             kueri.setString(6, txt_kd_admin.getText());
             
             JOptionPane.showMessageDialog(this, "Data Berhasil Di Ubah.");
+            loadTabelSKeluar();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.toString());
         }
@@ -401,6 +408,28 @@ public class frameSuratKeluar extends javax.swing.JFrame {
     private void txt_tgl_suratkeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tgl_suratkeluarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_tgl_suratkeluarActionPerformed
+
+    private void jTableSKeluarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSKeluarMouseClicked
+       int i = jTableSKeluar.getSelectedRow();
+       String kd_suratmasuk = jTableSKeluar.getValueAt(i, 0).toString();
+       String tgl_suratkeluar = jTableSKeluar.getValueAt(i, 1).toString();
+       String no_suratkeluar = jTableSKeluar.getValueAt(i, 2).toString();
+       String tujuan_suratkeluar = jTableSKeluar.getValueAt(i, 3).toString();       
+       String perihal_suratkeluar = jTableSKeluar.getValueAt(i, 4).toString();
+       String scan_suratkeluar = jTableSKeluar.getValueAt(i, 5).toString();
+       String tgl_inputsuratkeluar = jTableSKeluar.getValueAt(i, 6).toString();
+       String kd_admin = jTableSKeluar.getValueAt(i, 7).toString();
+       
+       txt_kd_suratkeluar.setText(kd_suratmasuk);
+       txt_tgl_suratkeluar.setText(tgl_suratkeluar);
+       txt_no_suratkeluar.setText(no_suratkeluar);
+       txt_tujuan_suratkeluar.setText(tujuan_suratkeluar);
+       txta_perihal_suratkeluar.setText(perihal_suratkeluar);
+       txt_scan_suratkeluar.setText(scan_suratkeluar);
+       txt_kd_admin.setText(kd_admin);
+       
+       
+    }//GEN-LAST:event_jTableSKeluarMouseClicked
 
     /**
      * @param args the command line arguments
