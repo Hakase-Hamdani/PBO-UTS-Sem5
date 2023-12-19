@@ -21,8 +21,7 @@ dbCrud obj;
      * Creates new form frameBahan
      */
 
-    public void tampilDataMahasiswa(){
-        this.setLocationRelativeTo(null);
+    public void tampilDataAdmin(){
         String[] JudulKolom = {"kd_admin", "nama_admin", "username_admin", "password_admin"}; //kolom yang akan di tampilkan
         int[] lebar ={100, 100, 100, 100}; //lebar masing-masing kolom
         String query = "SELECT * FROM tbl_admin";
@@ -32,8 +31,9 @@ dbCrud obj;
     }
     public frameAdmin() { //konstruktor
         initComponents();
+        this.setLocationRelativeTo(null);
         obj = new dbCrud(); //koneksi awal
-        tampilDataMahasiswa();
+        tampilDataAdmin();
     }
     
 
@@ -60,10 +60,13 @@ dbCrud obj;
         txtPassword = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jUbah = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jHapus = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableAdmin = new javax.swing.JTable();
         jReport = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        txtCari = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -121,10 +124,10 @@ dbCrud obj;
             }
         });
 
-        jButton3.setText("HAPUS");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jHapus.setText("HAPUS");
+        jHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jHapusActionPerformed(evt);
             }
         });
 
@@ -153,6 +156,26 @@ dbCrud obj;
             }
         });
 
+        jButton4.setText("CLEAR");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        txtCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCariActionPerformed(evt);
+            }
+        });
+        txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCariKeyPressed(evt);
+            }
+        });
+
+        jLabel5.setText("CARI DATA");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -173,14 +196,22 @@ dbCrud obj;
                             .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jUbah)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jUbah)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jHapus))
+                            .addComponent(jReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jReport)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
@@ -212,13 +243,19 @@ dbCrud obj;
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jUbah)
                             .addComponent(jButton1)
-                            .addComponent(jButton3)))
+                            .addComponent(jHapus))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton4)
+                            .addComponent(jReport)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jReport)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -259,7 +296,7 @@ dbCrud obj;
                 }
             } else {
                 obj.simpanDBAuto(NamaTabel, FieldTabelnya, Isitabelnya);
-                tampilDataMahasiswa();
+                tampilDataAdmin();
                 JOptionPane.showMessageDialog(this, "Data Berhasil Di Simpan, YAY!");
             }
         } catch (Exception e) {
@@ -278,7 +315,7 @@ dbCrud obj;
                 String NamaTabel = "tbl_admin";
                 String kd_admin = txtKd.getText();
                 obj.UbahDBAuto(NamaTabel, "kd_admin", kd_admin, FieldTabelnya, Isitabelnya);
-                tampilDataMahasiswa();
+                tampilDataAdmin();
                 JOptionPane.showMessageDialog(this, "Data Berhasil Di Ubah!");
             }
         } catch (Exception e) {
@@ -286,21 +323,24 @@ dbCrud obj;
         }
     }//GEN-LAST:event_jUbahActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-//        try {
-//            String sqlHapus = "DELETE FROM tbl_admin where kd_admin = ?";
-//            PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlHapus);
-//            
-//            kueri.setString(1, txtKd.getText());
-//            
-//            kueri.executeUpdate();
-//            // loadTabelAdmin();
-//            
-//            JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, e.toString());
-//        }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jHapusActionPerformed
+        try {
+            if ((txtKd.getText().isEmpty()) && (txtNama.getText().isEmpty()) && (txtUsername.getText().isEmpty()) && (txtPassword.getText().isEmpty())) {
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Yang Akan Di Hapus Terlebih Dahulu!");
+                jTableAdmin.requestFocus();
+            } else {
+                String[] FieldTabelnya ={"nama_admin", "username_admin", "password_admin"};
+                String[] Isitabelnya = {txtNama.getText(), txtUsername.getText(), txtPassword.getText()};
+                String NamaTabel = "tbl_admin";
+                String kd_admin = txtKd.getText();
+                obj.HapusDBAuto(NamaTabel, "kd_admin", kd_admin);
+                tampilDataAdmin();
+                JOptionPane.showMessageDialog(this, "Data Berhasil Di Hapus!");
+            }
+        } catch (Exception e) {
+            System.err.println(e.toString());
+        }
+    }//GEN-LAST:event_jHapusActionPerformed
 
     private void jTableAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAdminMouseClicked
         try {
@@ -320,8 +360,38 @@ dbCrud obj;
     }//GEN-LAST:event_jTableAdminMouseClicked
 
     private void jReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jReportActionPerformed
-        obj.tampilLaporan("src/report/lapAdmin.jrxml", "SELECT * FROM tbl_admin");
+        String cari = txtCari.getText();
+        String SQL = "SELECT * FROM tbl_admin WHERE kd_admin LIKE '%"+cari+"%' OR nama_admin LIKE '%"+cari+"%' OR username_admin LIKE '%"+cari+"%'";
+        obj.tampilLaporan("src/report/lapAdmin.jrxml", SQL);
     }//GEN-LAST:event_jReportActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String clear = "";
+        
+        txtKd.setText(clear);
+        txtNama.setText(clear);
+        txtUsername.setText(clear);
+        txtPassword.setText(clear);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCariActionPerformed
+
+    private void txtCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyPressed
+        try {
+            String cari = txtCari.getText();
+            String SQL = "SELECT * FROM tbl_admin WHERE kd_admin LIKE '%"+cari+"%' OR nama_admin LIKE '%"+cari+"%' OR username_admin LIKE '%"+cari+"%'";
+            
+            String[] JudulKolom = {"kd_admin", "nama_admin", "username_admin", "password_admin"}; //kolom yang akan di tampilkan
+            int[] lebar ={100, 100, 100, 100}; //lebar masing-masing kolom
+            obj.JudulJTable(jTableAdmin, JudulKolom); //judul kolom
+            obj.tampilTable(JudulKolom, SQL, jTableAdmin); //isi tabel
+            obj.LebarJtable(jTableAdmin, lebar); //lebar kolom
+            
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_txtCariKeyPressed
 
     /**
      * @param args the command line arguments
@@ -361,11 +431,13 @@ dbCrud obj;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jHapus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JButton jReport;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -374,6 +446,7 @@ dbCrud obj;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTableAdmin;
     private javax.swing.JButton jUbah;
+    private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txtKd;
     private javax.swing.JTextField txtNama;
     private javax.swing.JTextField txtPassword;
