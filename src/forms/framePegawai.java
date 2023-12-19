@@ -268,11 +268,13 @@ public class framePegawai extends javax.swing.JFrame {
                 cari.setString(1, txtKd.getText());
                 ResultSet hasil = cari.executeQuery();
                 if (hasil.next()){ //jika id input ada
-                    JOptionPane.showMessageDialog(this, "Id bahan SUDAH ADA!");
+                    JOptionPane.showMessageDialog(this, "Kode Pegawai SUDAH ADA!");
                     //tampilkan data yang sudah ada sesuai dengan id yang di masukkan
-                    txtNama.setText(hasil.getString("nama"));
+                    txtKd.setText(hasil.getString("kd_pegawai"));
+                    txtNama.setText(hasil.getString("nama_pegawai"));
                     txtKdJabatan.setText(hasil.getString("kd_jabatan"));
-                    txtPassword.setText(hasil.getString("password"));
+                    txtPassword.setText(hasil.getString("password_pegawai"));
+                    txtFt.setText(hasil.getString("foto_pegawai"));
                 } else { //jika id input tidak ada yang sama
                     String sqlSimpan = "INSERT INTO tbl_pegawai VALUE (?, ?, ?, ?, ?)";
                     PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlSimpan);
