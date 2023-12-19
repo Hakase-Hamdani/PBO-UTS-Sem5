@@ -23,15 +23,15 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author Administrator 10
  */
-public class dbCrud {
+public class configdb_2110010302 {
     private String Database = "muhammadhamdani_2110010302";
     private String jdbcurl = "jdbc:mysql://localhost:3306/"+Database;
     private String username = "root";
     private String password = "";
     
-    public dbCrud(){}
+    public configdb_2110010302(){}
     
-    public dbCrud(String url, String username, String password){
+    public configdb_2110010302(String url, String username, String password){
         try {
             Driver mysqldriver = new com.mysql.jdbc.Driver();
             DriverManager.registerDriver(mysqldriver);

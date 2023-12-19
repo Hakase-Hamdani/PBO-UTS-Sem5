@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package program_administrasi;
-import dataBase.dbCrud;
+import dataBase.configdb_2110010302;
 import forms.frameAdmin;
 import forms.frameJabatan;
 import forms.framePegawai;
@@ -21,7 +21,7 @@ public class ProgramAdministrasi {
         
         //String[] field = {"nama_admin", "username_admin", "password_admin"};
         //String[] isiField = {"Dani", "2103BJM", "083109875456789"};
-        //dbCrud obj = new dbCrud();
+        //dbCrud obj = new configdb_2110010302();
         
         
         //obj.simpanDBAuto("tbl_admin", field, isiField);

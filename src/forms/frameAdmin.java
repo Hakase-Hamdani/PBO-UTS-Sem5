@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package forms;
-import dataBase.dbCrud;
+import dataBase.configdb_2110010302;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * @author Administrator 10
  */
 public class frameAdmin extends javax.swing.JFrame {
-dbCrud obj;
+configdb_2110010302 obj;
 //    koneksi objekku; //variable objekku
 //    DefaultTableModel modelTabelAdmin; //this is datasource equivalent in delphi, i guess...
     
@@ -32,7 +32,7 @@ dbCrud obj;
     public frameAdmin() { //konstruktor
         initComponents();
         this.setLocationRelativeTo(null);
-        obj = new dbCrud(); //koneksi awal
+        obj = new configdb_2110010302(); //koneksi awal
         tampilDataAdmin();
     }
     
