@@ -28,6 +28,7 @@ configdb_2110010302 obj;
         obj.JudulJTable(jTableAdmin, JudulKolom); //judul kolom
         obj.tampilTable(JudulKolom, query, jTableAdmin); //isi tabel
         obj.LebarJtable(jTableAdmin, lebar); //lebar kolom
+        lblJmlData.setText(String.valueOf(obj.jumlahRecord(query)));
     }
     public frameAdmin() { //konstruktor
         initComponents();
@@ -67,6 +68,8 @@ configdb_2110010302 obj;
         jButton4 = new javax.swing.JButton();
         txtCari = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lblJmlData = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -176,6 +179,11 @@ configdb_2110010302 obj;
 
         jLabel5.setText("CARI DATA");
 
+        jLabel6.setText("JUMLAH DATA:");
+
+        lblJmlData.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblJmlData.setText("\"\"");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -207,12 +215,17 @@ configdb_2110010302 obj;
                                 .addComponent(jHapus))
                             .addComponent(jReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblJmlData))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
 
@@ -255,7 +268,11 @@ configdb_2110010302 obj;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(lblJmlData))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -438,6 +455,7 @@ configdb_2110010302 obj;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JButton jReport;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -446,6 +464,7 @@ configdb_2110010302 obj;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTableAdmin;
     private javax.swing.JButton jUbah;
+    private javax.swing.JLabel lblJmlData;
     private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txtKd;
     private javax.swing.JTextField txtNama;
