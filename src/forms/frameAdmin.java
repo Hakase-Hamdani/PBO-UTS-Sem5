@@ -303,7 +303,7 @@ configdb_2110010302 obj;
                 JOptionPane.showMessageDialog(this, "Kode Admin sudah terdaftar");
                 try {
                     Statement stm = obj.getKoneksi().createStatement();
-                    ResultSet rslt = stm.executeQuery("SELECT * FROM tbl_admin WHERE kd_admin = "+txtKd.getText()+"'");
+                    ResultSet rslt = stm.executeQuery("SELECT * FROM tbl_admin WHERE kd_admin = "+txtKd.getText());
                     rslt.next();
                     txtKd.setText(rslt.getString(2));
                     txtNama.setText(rslt.getString(3));
@@ -346,8 +346,6 @@ configdb_2110010302 obj;
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Yang Akan Di Hapus Terlebih Dahulu!");
                 jTableAdmin.requestFocus();
             } else {
-                String[] FieldTabelnya ={"nama_admin", "username_admin", "password_admin"};
-                String[] Isitabelnya = {txtNama.getText(), txtUsername.getText(), txtPassword.getText()};
                 String NamaTabel = "tbl_admin";
                 String kd_admin = txtKd.getText();
                 obj.HapusDBAuto(NamaTabel, "kd_admin", kd_admin);
@@ -407,6 +405,7 @@ configdb_2110010302 obj;
             obj.LebarJtable(jTableAdmin, lebar); //lebar kolom
             
         } catch (Exception e) {
+            System.err.println(e.toString());
         }
     }//GEN-LAST:event_txtCariKeyPressed
 
