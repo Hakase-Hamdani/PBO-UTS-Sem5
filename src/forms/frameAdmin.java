@@ -13,13 +13,8 @@ import javax.swing.JOptionPane;
  * @author Administrator 10
  */
 public class frameAdmin extends javax.swing.JFrame {
-configdb_2110010302 obj;
-//    koneksi objekku; //variable objekku
-//    DefaultTableModel modelTabelAdmin; //this is datasource equivalent in delphi, i guess...
-    
-    /**
-     * Creates new form frameBahan
-     */
+    configdb_2110010302 obj;
+
 
     public void tampilDataAdmin(){
         String[] JudulKolom = {"kd_admin", "nama_admin", "username_admin", "password_admin"}; //kolom yang akan di tampilkan

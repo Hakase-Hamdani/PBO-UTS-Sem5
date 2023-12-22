@@ -47,8 +47,9 @@ public class configdb_2110010302 {
             Driver mysqldriver = new com.mysql.jdbc.Driver();
             DriverManager.registerDriver(mysqldriver);
             System.out.println("Berhasil Dikoneksikan");
-        } catch (Exception e) {
-            System.err.println(e.toString());
+        } catch (SQLException e) {
+            //System.err.println(e.toString());
+            JOptionPane.showMessageDialog(null, e.toString());
         }
     return DriverManager.getConnection(this.jdbcurl, this.username, this.password);
     }
@@ -59,8 +60,9 @@ public class configdb_2110010302 {
             Statement sts = getKoneksi().createStatement();
             ResultSet rs = sts.executeQuery("SELECT * FROM "+tabel+" WHERE "+primarykey+" = '"+isi+"'");
             hasil = rs.next();
-        } catch (Exception e) {
-            System.err.println(e.toString());
+        } catch (SQLException e) {
+            //System.err.println(e.toString());
+            JOptionPane.showMessageDialog(null, e.toString());
         }
         return hasil;
     }
@@ -77,7 +79,8 @@ public class configdb_2110010302 {
                 }                   
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            //System.err.println(e.toString());
+            JOptionPane.showMessageDialog(null, e.toString());
         }
         return "("+hasil+")";
     }
@@ -94,7 +97,8 @@ public class configdb_2110010302 {
                     }
                 }
             } catch (Exception e) {
-                System.out.println(e.toString());
+                //System.err.println(e.toString());
+                JOptionPane.showMessageDialog(null, e.toString());
         }
         return "("+hasil+")";
     }
@@ -106,8 +110,9 @@ public class configdb_2110010302 {
             save.executeUpdate(SQL);
             save.close();;
             System.out.println(SQL);
-        } catch (Exception e) {
-            System.err.println(e.toString());
+        } catch (SQLException e) {
+            //System.err.println(e.toString());
+            JOptionPane.showMessageDialog(null, e.toString());
         }
     }
     
@@ -123,7 +128,8 @@ public class configdb_2110010302 {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            //System.err.println(e.toString());
+            JOptionPane.showMessageDialog(null, e.toString());
         }
         return  hasil;
     }
@@ -137,8 +143,9 @@ public class configdb_2110010302 {
             getKoneksi().close();
             System.err.println("Data Berhasil diubah");
             System.err.println(SQLEdit);
-        } catch (Exception e) {
-            System.out.println(e.toString());
+        } catch (SQLException e) {
+            //System.err.println(e.toString());
+            JOptionPane.showMessageDialog(null, e.toString());
         }
     }
     
@@ -150,8 +157,9 @@ public class configdb_2110010302 {
             perintah.close();
             getKoneksi().close();
             System.out.println("Data Berhasil Dihapus");
-        } catch (Exception e) {
-            System.err.println(e.toString());
+        } catch (SQLException e) {
+            //System.err.println(e.toString());
+            JOptionPane.showMessageDialog(null, e.toString());
         }
     }
     
@@ -163,7 +171,8 @@ public class configdb_2110010302 {
                 modelnya.addColumn(Judulnya[i]);
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            //System.err.println(e.toString());
+            JOptionPane.showMessageDialog(null, e.toString());
         }
     }
     
@@ -176,7 +185,8 @@ public class configdb_2110010302 {
                 kolom.setPreferredWidth(Lebarnya[i]);
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            //System.err.println(e.toString());
+            JOptionPane.showMessageDialog(null, e.toString());
         }
     }
     
@@ -199,7 +209,8 @@ public class configdb_2110010302 {
                 }
                 j++;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            //System.err.println(e.toString());
             JOptionPane.showMessageDialog(null, e.toString());
         }
         return data;
@@ -211,6 +222,7 @@ public class configdb_2110010302 {
             int jum = title.length;
             Tabel.setModel(new DefaultTableModel(isiTable(SQL, jum), title));
         } catch (Exception e) {
+            //System.err.println(e.toString());
             JOptionPane.showMessageDialog(null, e.toString());
         }
     }
@@ -225,7 +237,8 @@ public class configdb_2110010302 {
                 i++;
             }
             hasil = i;
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            //System.err.println(e.toString());
             JOptionPane.showMessageDialog(null, e.toString());
         }
         return hasil;
@@ -244,6 +257,7 @@ public class configdb_2110010302 {
             JasperPrint JP = JasperFillManager.fillReport(JR, null, getKoneksi());
             JasperViewer.viewReport(JP);
         } catch (Exception e) {
+            //System.err.println(e.toString());
             JOptionPane.showMessageDialog(null, e.toString());
         }
     }

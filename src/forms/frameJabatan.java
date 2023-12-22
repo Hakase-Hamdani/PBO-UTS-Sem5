@@ -3,52 +3,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package forms;
-import dataBase.koneksi;
-import java.sql.PreparedStatement;
+import dataBase.configdb_2110010302;
 import javax.swing.JOptionPane;
-import java.sql.ResultSet;
-import javax.swing.table.DefaultTableModel;
+import java.sql.*;
 
 /**
  *
  * @author Administrator 10
  */
 public class frameJabatan extends javax.swing.JFrame {
+    configdb_2110010302 obj;
     
-    koneksi objekku; //variable objekku
-    DefaultTableModel modelTabelJabatan; //this is datasource equivalent in delphi, i guess...
-    /**
-     * Creates new form frameBahan
-     */
+    public void tampilDataJabatan(){
+        String[] JudulKolom = {"kd_jabatan", "nama_jabatan"};
+        int[] lebar = {100, 200};
+        String query = "SELECT * FROM tbl_jabatan";
+        obj.JudulJTable(jTableJabatan, JudulKolom);
+        obj.tampilTable(JudulKolom, query, jTableJabatan);
+        obj.LebarJtable(jTableJabatan, lebar);
+        lblJmlData.setText(String.valueOf(obj.jumlahRecord(query)));
+    }
+    
     public frameJabatan() { //konstruktor
         initComponents();
         this.setLocationRelativeTo(null);
-        objekku = new koneksi();//instance of variable objekku
-        modelTabelJabatan = new DefaultTableModel(); //instance/create datasourcenya
-        jTableJabatan.setModel(modelTabelJabatan);//koneksi datasource
-        //menambahkan kolom
-        modelTabelJabatan.addColumn("kd_jabatan");
-        modelTabelJabatan.addColumn("nama_jabatan");
-        
-        loadTabelJabatan();
-    }
-    
-    void loadTabelJabatan(){
-        try {
-            String sql = "SELECT * FROM tbl_jabatan";
-            PreparedStatement kueri = objekku.konekDB.prepareStatement(sql);//mengambil data kueri
-            ResultSet data = kueri.executeQuery();//mengambil data, i guess(?)
-            
-            while(data.next()){ //selama "data" ada
-                Object[] baris = new Object[5];
-                baris[0] = data.getString("kd_jabatan");
-                baris[1] = data.getString("nama_jabatan");
-                modelTabelJabatan.addRow(baris);
-            }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
-    }
+        obj = new configdb_2110010302();
+        tampilDataJabatan();
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,11 +48,17 @@ public class frameJabatan extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtKd = new javax.swing.JTextField();
         txtNama = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jBtnSimpan = new javax.swing.JButton();
+        jBtnEdit = new javax.swing.JButton();
+        jBtnHapus = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableJabatan = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lblJmlData = new javax.swing.JLabel();
+        txtCari = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -111,24 +98,24 @@ public class frameJabatan extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("SIMPAN");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBtnSimpan.setText("SIMPAN");
+        jBtnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBtnSimpanActionPerformed(evt);
             }
         });
 
-        jButton2.setText("UBAH");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jBtnEdit.setText("UBAH");
+        jBtnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jBtnEditActionPerformed(evt);
             }
         });
 
-        jButton3.setText("HAPUS");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jBtnHapus.setText("HAPUS");
+        jBtnHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jBtnHapusActionPerformed(evt);
             }
         });
 
@@ -150,30 +137,81 @@ public class frameJabatan extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jTableJabatan);
 
+        jLabel5.setText("CARI DATA");
+
+        jLabel6.setText("JUMLAH DATA:");
+
+        lblJmlData.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblJmlData.setText("\"\"");
+
+        txtCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCariActionPerformed(evt);
+            }
+        });
+        txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCariKeyPressed(evt);
+            }
+        });
+
+        jButton4.setText("CLEAR");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("REPORT");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtKd, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                            .addComponent(txtNama)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblJmlData))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(47, 47, 47)))
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addGap(40, 40, 40)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtKd, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                                    .addComponent(txtNama)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jBtnSimpan))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jBtnEdit)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jBtnHapus))
+                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtKd, txtNama});
@@ -181,24 +219,37 @@ public class frameJabatan extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtKd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtKd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jBtnEdit)
+                            .addComponent(jBtnSimpan)
+                            .addComponent(jBtnHapus))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton4)
+                            .addComponent(jButton1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
-                .addGap(95, 95, 95))
+                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(lblJmlData))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -208,76 +259,73 @@ public class frameJabatan extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtKdActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSimpanActionPerformed
         // TODO add your handling code here:
         try {
+            String[] FieldTabelnya ={"kd_jabatan", "nama_jabatan"};
+            String[] Isitabelnya = {txtKd.getText(), txtNama.getText()};
+            String NamaTabel = "tbl_jabatan";
             if (txtKd.getText().isEmpty()){ //jika Id kosong, tampilkan pesan
                 JOptionPane.showMessageDialog(this, "Kode Jabatan Belum Di isi!");
                 txtKd.requestFocus();
             } else if(txtNama.getText().isEmpty()) { //jika Nama kosong, tampilkan pesan
                 JOptionPane.showMessageDialog(this, "Nama Jabatan Belum Di isi!");
                 txtNama.requestFocus();
-            } else { //jika text box ber isi
-                String sqlCari = "SELECT * FROM tbl_jabatan WHERE kd_jabatan = ?"; //cek semua id sebelum input
-                PreparedStatement cari = objekku.konekDB.prepareStatement(sqlCari);
-                cari.setString(1, txtKd.getText());
-                ResultSet hasil = cari.executeQuery();
-                if (hasil.next()){ //jika id input ada
-                    JOptionPane.showMessageDialog(this, "Kode Jabatan SUDAH ADA!");
-                    //tampilkan data yang sudah ada sesuai dengan id yang di masukkan
-                    txtKd.setText(hasil.getString("kd_jabatan"));
-                    txtNama.setText(hasil.getString("nama_jabatan"));
-                } else { //jika id input tidak ada yang sama
-                    String sqlSimpan = "INSERT INTO tbl_jabatan VALUE (?, ?)";
-                    PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlSimpan);
-                
-                    kueri.setString(1, txtKd.getText());
-                    kueri.setString(2, txtNama.getText());
-                    
-                    kueri.executeUpdate();
-                    loadTabelJabatan();
-                    
-                    JOptionPane.showMessageDialog(this, "Data Berhasil Di Simpan.");
+            } else if(obj.duplikasiKey("tbl_jabatan", "kd_jabatan", txtKd.getText())) {
+                JOptionPane.showMessageDialog(this, "Kode Jabatan Sudah Terdaftar!");
+                try {
+                    Statement stm = obj.getKoneksi().createStatement();
+                    ResultSet rslt = stm.executeQuery("SELECT * FROM tbl_jabatan WHERE kd_jabatan = "+txtKd.getText());
+                    rslt.next();
+                    txtKd.setText(rslt.getString(2));
+                    txtNama.setText(rslt.getString(3));
+                } catch (Exception e) {
                 }
+            } else { //jika text box ber isi
+                obj.simpanDBAuto(NamaTabel, FieldTabelnya, Isitabelnya);
+                tampilDataJabatan();
+                JOptionPane.showMessageDialog(this, "Data Berhasil Di Simpan!");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.toString());
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBtnSimpanActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jBtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditActionPerformed
         // TODO add your handling code here:
         try {
-            String sqlUbah = "UPDATE tbl_jabatan set nama_jabatan=? where kd_jabatan=?";
-            PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlUbah);
-            
-            kueri.setString(2, txtKd.getText());
-            kueri.setString(1, txtNama.getText());
-            kueri.executeUpdate();
-            loadTabelJabatan();
-            
-            JOptionPane.showMessageDialog(this, "User-sama, data berhasil di ubah.");
-            
+            if ((txtKd.getText().isEmpty())&& (txtNama.getText().isEmpty())){
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Yang Akan Di Ubah.");
+                jTableJabatan.requestFocus();
+            }
+                String[] FieldTabelnya ={"nama_jabatan"};
+                String[] Isitabelnya = {txtNama.getText()};
+                String NamaTabel = "tbl_jabatan";
+                String kd_jabatan = txtKd.getText();
+                obj.UbahDBAuto(NamaTabel, "kd_jabatan", kd_jabatan, FieldTabelnya, Isitabelnya);
+                tampilDataJabatan();
+                JOptionPane.showMessageDialog(this, "Data Berhasil Di Ubah!");
         } catch (Exception e) { //i have a love/hate relationship with this thing
             JOptionPane.showMessageDialog(this, e.toString());
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jBtnEditActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jBtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnHapusActionPerformed
         try {
-            String sqlHapus = "DELETE FROM tbl_jabatan where kd_jabatan = ?";
-            PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlHapus);
-            
-            kueri.setString(1, txtKd.getText());
-            
-            kueri.executeUpdate();
-            loadTabelJabatan();
-            
-            JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
+            if ((txtKd.getText().isEmpty()) && (txtNama.getText().isEmpty())) {
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Yang Akan Di Hapus Terlebih Dahulu!");
+                jTableJabatan.requestFocus();
+            } else {
+                String NamaTabel = "tbl_jabatan";
+                String kd_jabatan = txtKd.getText();
+                obj.HapusDBAuto(NamaTabel, "kd_jabatan", kd_jabatan);
+                tampilDataJabatan();
+                JOptionPane.showMessageDialog(this, "Data Berhasil Di Hapus!");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.toString());
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jBtnHapusActionPerformed
 
     private void jTableJabatanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableJabatanMouseClicked
         int i = jTableJabatan.getSelectedRow();
@@ -287,6 +335,39 @@ public class frameJabatan extends javax.swing.JFrame {
         txtKd.setText(kd_jabatan);
         txtNama.setText(nama_jabatan);
     }//GEN-LAST:event_jTableJabatanMouseClicked
+
+    private void txtCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCariActionPerformed
+
+    private void txtCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyPressed
+        try {
+            String cari = txtCari.getText();
+            String SQL = "SELECT * FROM tbl_jabatan WHERE kd_jabatan LIKE '%"+cari+"%' OR nama_jabatan LIKE '%"+cari+"%'";
+
+            String[] JudulKolom = {"kd_admin", "nama_admin", "username_admin", "password_admin"}; //kolom yang akan di tampilkan
+            int[] lebar ={100, 100, 100, 100}; //lebar masing-masing kolom
+            obj.JudulJTable(jTableJabatan, JudulKolom); //judul kolom
+            obj.tampilTable(JudulKolom, SQL, jTableJabatan); //isi tabel
+            obj.LebarJtable(jTableJabatan, lebar); //lebar kolom
+
+        } catch (Exception e) {
+            System.err.println(e.toString());
+        }
+    }//GEN-LAST:event_txtCariKeyPressed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String clear = "";
+
+        txtKd.setText(clear);
+        txtNama.setText(clear);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String cari = txtCari.getText();
+            String SQL = "SELECT * FROM tbl_jabatan WHERE kd_jabatan LIKE '%"+cari+"%' OR nama_jabatan LIKE '%"+cari+"%'";
+            obj.tampilLaporan("src/report/lapJabatan.jrxml", SQL);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -331,17 +412,23 @@ public class frameJabatan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnEdit;
+    private javax.swing.JButton jBtnHapus;
+    private javax.swing.JButton jBtnSimpan;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTableJabatan;
+    private javax.swing.JLabel lblJmlData;
+    private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txtKd;
     private javax.swing.JTextField txtNama;
     // End of variables declaration//GEN-END:variables
