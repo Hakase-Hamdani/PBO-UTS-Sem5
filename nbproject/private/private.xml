@@ -3,11 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/WINDOWS%2010/Documents/NetBeansProjects/MuhammadHamdani_2110010302_Sem5/src/forms/framePegawai.java</file>
             <file>file:/C:/Users/WINDOWS%2010/Documents/NetBeansProjects/MuhammadHamdani_2110010302_Sem5/src/dataBase/koneksi.java</file>
             <file>file:/C:/Users/WINDOWS%2010/Documents/NetBeansProjects/MuhammadHamdani_2110010302_Sem5/src/report/lapPegawai.jrxml</file>
             <file>file:/C:/Users/WINDOWS%2010/Documents/NetBeansProjects/MuhammadHamdani_2110010302_Sem5/src/program_administrasi/ProgramAdministrasi.java</file>
             <file>file:/C:/Users/WINDOWS%2010/Documents/NetBeansProjects/MuhammadHamdani_2110010302_Sem5/src/forms/frameAdmin.java</file>
+=======
+            <file>file:/C:/Users/WINDOWS%2010/Documents/NetBeansProjects/MuhammadHamdani_2110010302_Sem5/src/forms/frameSppd.java</file>
+            <file>file:/C:/Users/WINDOWS%2010/Documents/NetBeansProjects/MuhammadHamdani_2110010302_Sem5/src/forms/frameSuratKeluar.java</file>
+            <file>file:/C:/Users/WINDOWS%2010/Documents/NetBeansProjects/MuhammadHamdani_2110010302_Sem5/src/forms/framePegawai.java</file>
+            <file>file:/C:/Users/WINDOWS%2010/Documents/NetBeansProjects/MuhammadHamdani_2110010302_Sem5/src/forms/frameSuratMasuk.java</file>
+            <file>file:/C:/Users/WINDOWS%2010/Documents/NetBeansProjects/MuhammadHamdani_2110010302_Sem5/src/dataBase/koneksi.java</file>
+            <file>file:/C:/Users/WINDOWS%2010/Documents/NetBeansProjects/MuhammadHamdani_2110010302_Sem5/src/dataBase/dbCrud.java</file>
+            <file>file:/C:/Users/WINDOWS%2010/Documents/NetBeansProjects/MuhammadHamdani_2110010302_Sem5/src/program_administrasi/ProgramAdministrasi.java</file>
+>>>>>>> c8433adbaf904bfa4530e92828f76b6a8b07edae
         </group>
     </open-files>
 </project-private>
