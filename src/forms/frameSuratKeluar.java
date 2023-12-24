@@ -3,64 +3,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package forms;
-
-import dataBase.koneksi;
-import java.sql.PreparedStatement;
+import dataBase.configdb_2110010302;
+import java.sql.*;
 import javax.swing.JOptionPane;
-import java.sql.ResultSet;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Administrator 10
  */
 public class frameSuratKeluar extends javax.swing.JFrame {
-
-    koneksi objekku;
-    DefaultTableModel modelTabelSKeluar;
+    configdb_2110010302 obj;
+    
+    public void tampilDataSKeluar(){
+        String[] JudulKolom = {"kode surat","tgl keluar","no","tujuan", "perihal", "scan", "tgl input", "kode admin"}; //kolom yang akan di tampilkan
+        int[] lebar ={50, 100, 50, 150, 150, 75, 100, 50}; //lebar masing-masing kolom
+        String query = "SELECT * FROM tbl_suratkeluar";
+        obj.JudulJTable(jTableSKeluar, JudulKolom); //judul kolom
+        obj.tampilTable(JudulKolom, query, jTableSKeluar); //isi tabel
+        obj.LebarJtable(jTableSKeluar, lebar); //lebar kolom
+    }
     
     public frameSuratKeluar() {
         initComponents();
         this.setLocationRelativeTo(null);
-        objekku = new koneksi();
-        modelTabelSKeluar = new DefaultTableModel();
-        jTableSKeluar.setModel(modelTabelSKeluar);
-        
-        modelTabelSKeluar.addColumn("kd_suratkeluar");
-        modelTabelSKeluar.addColumn("tgl_suratkeluar");
-        modelTabelSKeluar.addColumn("no_suratkeluar");
-        modelTabelSKeluar.addColumn("tujuan_suratkeluar");
-        modelTabelSKeluar.addColumn("perihal_suratkeluar");
-        modelTabelSKeluar.addColumn("scan_suratkeluar");
-        modelTabelSKeluar.addColumn("tgl_inputsuratkeluar");
-        modelTabelSKeluar.addColumn("kd_admin");       
-        
-        loadTabelSKeluar();
+        obj = new configdb_2110010302();
+        tampilDataSKeluar();
     }
-    
-    void loadTabelSKeluar(){
-        try {
-            String sql = "SELECT * FROM tbl_suratkeluar";
-            PreparedStatement kueri = objekku.konekDB.prepareStatement(sql);
-            ResultSet data = kueri.executeQuery();
-            
-            while(data.next()){
-                Object[] baris = new Object[8];
-                baris[0] = data.getString("kd_suratkeluar");
-                baris[1] = data.getString("tgl_suratkeluar");
-                baris[2] = data.getString("no_suratkeluar");
-                baris[3] = data.getString("tujuan_suratkeluar");
-                baris[4] = data.getString("perihal_suratkeluar");
-                baris[5] = data.getString("scan_suratkeluar");
-                baris[6] = data.getString("tgl_inputsuratkeluar");
-                baris[7] = data.getString("kd_admin");
-                modelTabelSKeluar.addRow(baris);
-            }
-        } catch(Exception e) {
-            System.out.print(e.getMessage()); 
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -93,6 +61,9 @@ public class frameSuratKeluar extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         txt_tgl_suratkeluar = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        txtCari = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -192,20 +163,32 @@ public class frameSuratKeluar extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         jLabel14.setText("*isi dengan direktori surat");
 
+        jButton4.setText("CLEAR");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setText("CARI DATA");
+
+        txtCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCariActionPerformed(evt);
+            }
+        });
+        txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCariKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(btnSimpan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUbah)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnHapus)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,9 +217,24 @@ public class frameSuratKeluar extends javax.swing.JFrame {
                                 .addComponent(jLabel13))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel14)))
+                        .addComponent(jLabel14))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSimpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnUbah)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnHapus)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(37, 37, 37)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1089, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1089, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCari)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -244,7 +242,6 @@ public class frameSuratKeluar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -281,8 +278,16 @@ public class frameSuratKeluar extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSimpan)
                             .addComponent(btnUbah)
-                            .addComponent(btnHapus))))
-                .addContainerGap(45, Short.MAX_VALUE))
+                            .addComponent(btnHapus))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15))))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -309,8 +314,10 @@ public class frameSuratKeluar extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_kd_adminActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-        // TAMBAHKAN DI SINI
         try {
+            String[] FieldTabelnya ={"kd_suratkeluar", "tgl_suratkeluar", "no_suratkeluar", "tujuan_suratkeluar", "perihal_suratkeluar", "scan_suratkeluar", "tgl_inputsuratkeluar", "kd_admin" };
+            String[] Isitabelnya = {txt_kd_suratkeluar.getText(), txt_tgl_suratkeluar.getText(), txt_no_suratkeluar.getText(), txt_tujuan_suratkeluar.getText(), txta_perihal_suratkeluar.getText(), txt_scan_suratkeluar.getText(), txt_kd_admin.getText()};
+            String NamaTabel = "tbl_suratkeluar";
             if (txt_kd_suratkeluar.getText().isEmpty()){ //jika Id kosong, tampilkan pesan
                 JOptionPane.showMessageDialog(this, "Kode Surat Keluar Belum Di Isi!");
                 txt_kd_suratkeluar.requestFocus();
@@ -331,39 +338,27 @@ public class frameSuratKeluar extends javax.swing.JFrame {
                 txt_scan_suratkeluar.requestFocus();
             } else if (txt_kd_admin.getText().isEmpty()){
                 JOptionPane.showMessageDialog(this, "Kode Admin Belum Di Isi!");
-            } else {
-                String sqlcari = "SELECT * FROM tbl_suratkeluar WHERE kd_suratkeluar = ?";
-                PreparedStatement cari = objekku.konekDB.prepareStatement(sqlcari);
-                cari.setString(1, txt_kd_suratkeluar.getText());
-                ResultSet hasil = cari.executeQuery();
-                
-                if (hasil.next()){
-                    JOptionPane.showMessageDialog(this, "Kode Surat Keluar Sudah Ada!");
-                    
-                    txt_kd_suratkeluar.setText(hasil.getString("kd_suratkeluar"));
-                    txt_tgl_suratkeluar.setText(hasil.getString("tgl_suratkeluar"));
-                    txt_no_suratkeluar.setText(hasil.getString("no_suratkeluar"));
-                    txt_tujuan_suratkeluar.setText(hasil.getString("tujuan_suratkeluar"));
-                    txta_perihal_suratkeluar.setText(hasil.getString("perihal_suratkeluar"));
-                    txt_scan_suratkeluar.setText(hasil.getString("scan_suratkeluar"));
-                    txt_kd_admin.setText(hasil.getString("kd_admin"));
-                } else {
-                    String sqlSimpan = "INSERT INTO tbl_suratkeluar (kd_suratkeluar, tgl_suratkeluar, no_suratkeluar, tujuan_suratkeluar, perihal_suratkeluar, scan_suratkeluar, kd_admin) VALUE (?, ?, ?, ?, ?, ?, ?)";
-                    PreparedStatement kueri = objekku.konekDB.prepareCall(sqlSimpan);
-                    
-                    kueri.setString(1, txt_kd_suratkeluar.getText());
-                    kueri.setString(2, txt_tgl_suratkeluar.getText());
-                    kueri.setString(3, txt_no_suratkeluar.getText());
-                    kueri.setString(4, txt_tujuan_suratkeluar.getText());
-                    kueri.setString(5, txta_perihal_suratkeluar.getText());
-                    kueri.setString(6, txt_scan_suratkeluar.getText());
-                    kueri.setString(7, txt_kd_admin.getText());
-
-                    kueri.executeUpdate();
-                    loadTabelSKeluar();
-                    
-                    JOptionPane.showMessageDialog(this, "Data Berhasil Di Simpan.");
+                txt_kd_admin.requestFocus();
+            } else if(obj.duplikasiKey(NamaTabel, "kd_suratkeluar", txt_kd_suratkeluar.getText())){
+                JOptionPane.showMessageDialog(this, "Kode Surat Keluar sudah terdaftar");
+                try {
+                    Statement stm = obj.getKoneksi().createStatement();
+                    ResultSet rslt = stm.executeQuery("SELECT * FROM tbl_suratmasuk");
+                    rslt.next();
+                    txt_kd_suratkeluar.setText(rslt.getString(2));
+                    txt_tgl_suratkeluar.setText(rslt.getString(3));
+                    txt_no_suratkeluar.setText(rslt.getString(4));
+                    txt_tujuan_suratkeluar.setText(rslt.getString(5));
+                    txta_perihal_suratkeluar.setText(rslt.getString(6));
+                    txt_scan_suratkeluar.setText(rslt.getString(7));
+                    txt_kd_admin.setText(rslt.getString(8));
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(this, e.toString());
                 }
+            } else {
+                obj.simpanDBAuto(NamaTabel, FieldTabelnya, Isitabelnya);
+                tampilDataSKeluar();
+                JOptionPane.showMessageDialog(this, "Data Berhasil Di Tambahkan");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.toString());
@@ -372,19 +367,17 @@ public class frameSuratKeluar extends javax.swing.JFrame {
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
         try {
-            String sqlUbah = "UPDATE tbl_suratkeluar SET tgl_suratkeluar = ?, no_suratkeluar = ?, tujuan_suratkeluar = ?, perihal_suratkeluar = ?, scan_suratkeluar = ?, kd_admin = ? WHERE kd_suratkeluar = ?";
-            PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlUbah);
-            
-            kueri.setString(7, txt_kd_suratkeluar.getText());
-            kueri.setString(1, txt_tgl_suratkeluar.getText());
-            kueri.setString(2, txt_no_suratkeluar.getText());
-            kueri.setString(3, txt_tujuan_suratkeluar.getText());
-            kueri.setString(4, txta_perihal_suratkeluar.getText());
-            kueri.setString(5, txt_scan_suratkeluar.getText());
-            kueri.setString(6, txt_kd_admin.getText());
-            
-            JOptionPane.showMessageDialog(this, "Data Berhasil Di Ubah.");
-            loadTabelSKeluar();
+            if ((txt_kd_suratkeluar.getText().isEmpty()) &&  (txt_tgl_suratkeluar.getText().isEmpty()) &&  (txt_no_suratkeluar.getText().isEmpty()) &&  (txt_tujuan_suratkeluar.getText().isEmpty()) &&  (txta_perihal_suratkeluar.getText().isEmpty()) &&  (txt_scan_suratkeluar.getText().isEmpty()) &&  (txt_kd_admin.getText().isEmpty())) {
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu!");
+            } else {
+                String[] FieldTabelnya ={"tgl_suratkeluar", "no_suratkeluar", "tujuan_suratkeluar", "perihal_suratkeluar", "scan_suratkeluar", "tgl_inputsuratkeluar", "kd_admin" };
+                String[] Isitabelnya = {txt_tgl_suratkeluar.getText(), txt_no_suratkeluar.getText(), txt_tujuan_suratkeluar.getText(), txta_perihal_suratkeluar.getText(), txt_scan_suratkeluar.getText(), txt_kd_admin.getText()};
+                String NamaTabel = "tbl_suratkeluar";
+                String kd_key = txt_kd_suratkeluar.getText();
+                obj.UbahDBAuto(NamaTabel, "kd_suratkeluar", kd_key, FieldTabelnya, Isitabelnya);
+                tampilDataSKeluar();
+                JOptionPane.showMessageDialog(this, "Data Berhasil Di Ubah!");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.toString());
         }
@@ -392,13 +385,15 @@ public class frameSuratKeluar extends javax.swing.JFrame {
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         try {
-            String sqlHapus = "DELETE FROM tbl_suratkeluar WHERE kd_suratkeluar = ?";
-            PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlHapus);
-            
-            kueri.setString(1, txt_kd_suratkeluar.getText());
-            
-            kueri.executeUpdate();
-            loadTabelSKeluar();
+            if ((txt_kd_suratkeluar.getText().isEmpty()) &&  (txt_tgl_suratkeluar.getText().isEmpty()) &&  (txt_no_suratkeluar.getText().isEmpty()) &&  (txt_tujuan_suratkeluar.getText().isEmpty()) &&  (txta_perihal_suratkeluar.getText().isEmpty()) &&  (txt_scan_suratkeluar.getText().isEmpty()) &&  (txt_kd_admin.getText().isEmpty())) {
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Yang Akan Di Hapus Terlebih Dahulu!");
+            }else{
+                String NamaTabel = "tbl_suratkeluar";
+                String kd_key = txt_kd_suratkeluar.getText();
+                obj.HapusDBAuto(NamaTabel, "kd_suratmasuk", kd_key);
+                tampilDataSKeluar();
+                JOptionPane.showMessageDialog(this, "Data Berhasil Di Hapus!");
+            }
             JOptionPane.showMessageDialog(this, "Data Berhasil Di Hapus.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.toString());
@@ -430,6 +425,43 @@ public class frameSuratKeluar extends javax.swing.JFrame {
        
        
     }//GEN-LAST:event_jTableSKeluarMouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String clear = "";
+
+        txt_kd_suratkeluar.setText(clear);
+        txt_tgl_suratkeluar.setText(clear);
+        txt_no_suratkeluar.setText(clear);
+        txt_tujuan_suratkeluar.setText(clear);
+        txta_perihal_suratkeluar.setText(clear);
+        txt_scan_suratkeluar.setText(clear);
+        txt_kd_admin.setText(clear);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCariActionPerformed
+
+    private void txtCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyPressed
+        try {
+            String cari = txtCari.getText();
+            String searchQuery = "SELECT * FROM tbl_suratkeluar WHERE kd_suratkeluar LIKE '%" + cari + "%' OR " +
+                                "no_suratkeluar LIKE '%" + cari + "%' OR " +
+                                "tujuan_suratkeluar LIKE '%" + cari + "%' OR " +
+                                "perihal_suratkeluar LIKE '%" + cari + "%' OR " +
+                                "scan_suratkeluar LIKE '%" + cari + "%' OR " +
+                                "kd_admin LIKE '%" + cari + "%'";
+
+            String[] JudulKolom = {"kode surat","tgl keluar","no","tujuan", "perihal", "scan", "tgl input", "kode admin"}; //kolom yang akan di tampilkan
+            int[] lebar ={50, 100, 50, 150, 150, 75, 100, 50}; //lebar masing-masing kolom
+            obj.JudulJTable(jTableSKeluar, JudulKolom); //judul kolom
+            obj.tampilTable(JudulKolom, searchQuery, jTableSKeluar); //isi tabel
+            obj.LebarJtable(jTableSKeluar, lebar); //lebar kolom
+
+        } catch (Exception e) {
+            System.err.println(e.toString());
+        }
+    }//GEN-LAST:event_txtCariKeyPressed
 
     /**
      * @param args the command line arguments
@@ -471,9 +503,11 @@ public class frameSuratKeluar extends javax.swing.JFrame {
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JButton btnUbah;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -484,6 +518,7 @@ public class frameSuratKeluar extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableSKeluar;
+    private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txt_kd_admin;
     private javax.swing.JTextField txt_kd_suratkeluar;
     private javax.swing.JTextField txt_no_suratkeluar;

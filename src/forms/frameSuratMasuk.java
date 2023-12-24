@@ -12,21 +12,21 @@ import javax.swing.JOptionPane;
  */
 public class frameSuratMasuk extends javax.swing.JFrame {
     configdb_2110010302 obj;
-    public void tampilDataAdmin(){
+    public void tampilDataSMasuk(){
         String[] JudulKolom = {"kode surat","tgl input","no","pengirim", "perihal", "scan", "kode pegawai", "tgl disposisi", "kode jabatan", "keterangan", "kode admin"}; //kolom yang akan di tampilkan
         int[] lebar ={50, 100, 50, 150, 150, 50, 50, 100, 50, 150, 50}; //lebar masing-masing kolom
         String query = "SELECT * FROM tbl_suratmasuk";
-        obj.JudulJTable(jTableSKeluar, JudulKolom); //judul kolom
-        obj.tampilTable(JudulKolom, query, jTableSKeluar); //isi tabel
-        obj.LebarJtable(jTableSKeluar, lebar); //lebar kolom
-        //lblJmlData.setText(String.valueOf(obj.jumlahRecord(query)));
+        obj.JudulJTable(jTableSMasuk, JudulKolom); //judul kolom
+        obj.tampilTable(JudulKolom, query, jTableSMasuk); //isi tabel
+        obj.LebarJtable(jTableSMasuk, lebar); //lebar kolom
+        lblJmlData.setText(String.valueOf(obj.jumlahRecord(query)));
     }
     
     public frameSuratMasuk() {
         initComponents();
         this.setLocationRelativeTo(null);
         obj = new configdb_2110010302();
-        tampilDataAdmin();
+        tampilDataSMasuk();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,7 +57,7 @@ public class frameSuratMasuk extends javax.swing.JFrame {
         txt_kodejabatan = new javax.swing.JTextField();
         txt_kdadmin = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableSKeluar = new javax.swing.JTable();
+        jTableSMasuk = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         txta_perihal = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -72,6 +72,10 @@ public class frameSuratMasuk extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         txtCari = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
+        jReport = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        lblJmlData = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -139,7 +143,7 @@ public class frameSuratMasuk extends javax.swing.JFrame {
             }
         });
 
-        jTableSKeluar.setModel(new javax.swing.table.DefaultTableModel(
+        jTableSMasuk.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -147,12 +151,12 @@ public class frameSuratMasuk extends javax.swing.JFrame {
                 "kode", "tanggal input", "nomor surat", "pengirim", "perihal", "scan file", "kode pegawail", "tanggal disposisi", "kode jabatan", "keterangan", "kode admin"
             }
         ));
-        jTableSKeluar.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableSMasuk.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableSKeluarMouseClicked(evt);
+                jTableSMasukMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTableSKeluar);
+        jScrollPane1.setViewportView(jTableSMasuk);
 
         txta_perihal.setColumns(20);
         txta_perihal.setRows(5);
@@ -221,15 +225,25 @@ public class frameSuratMasuk extends javax.swing.JFrame {
 
         jLabel14.setText("CARI DATA");
 
+        jReport.setText("REPORT");
+        jReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jReportActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setText("JUMLAH DATA: ");
+
+        lblJmlData.setText("\"\"");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                        .addGap(76, 76, 76)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
@@ -265,23 +279,34 @@ public class frameSuratMasuk extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel13)
                                             .addComponent(jLabel12))
-                                        .addGap(0, 0, Short.MAX_VALUE)))))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 783, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtCari))))
-                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE))))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSimpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnSimpan))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUbah)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnUbah)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnHapus))
+                            .addComponent(jReport, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(59, 59, 59)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 783, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel14)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtCari)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnHapus)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(lblJmlData)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel16)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -289,12 +314,6 @@ public class frameSuratMasuk extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -334,11 +353,21 @@ public class frameSuratMasuk extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(txt_kodejabatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_kodejabatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel15)
+                        .addComponent(jLabel16)
+                        .addComponent(lblJmlData))
+                    .addComponent(jLabel10)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
@@ -349,8 +378,10 @@ public class frameSuratMasuk extends javax.swing.JFrame {
                     .addComponent(btnUbah)
                     .addComponent(btnHapus))
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jReport))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -386,7 +417,7 @@ public class frameSuratMasuk extends javax.swing.JFrame {
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         try {
-            String[] FieldTabelnya ={"kd_suratmasuk", "tgl_inputsuratmasuk", "no_suratmasuk", "pengirim_suratmasuk", "perihal_suratmasuk", "scan_suratmasuk", "kd_pegawai", };
+            String[] FieldTabelnya ={"kd_suratmasuk", "tgl_inputsuratmasuk", "no_suratmasuk", "pengirim_suratmasuk", "perihal_suratmasuk", "scan_suratmasuk", "kd_pegawai", "tgl_disposisi", "kd_jabatan", "keterangan", "kd_admin"};
             String[] Isitabelnya = {txt_kd_masuk.getText(), txt_tgl_masuk.getText(), txt_no_masuk.getText(), txt_pengirim.getText(), txta_perihal.getText(), txt_scan.getText(), txt_kodepegawai.getText(), txt_tgl_disposisi.getText(), txt_kodejabatan.getText(),  txta_ket.getText(), txt_kdadmin.getText()};
             String NamaTabel = "tbl_suratmasuk";
             if (txt_kd_masuk.getText().isEmpty()) {
@@ -444,7 +475,7 @@ public class frameSuratMasuk extends javax.swing.JFrame {
                 }
             } else {
                 obj.simpanDBAuto(NamaTabel, FieldTabelnya, Isitabelnya);
-                tampilDataAdmin();
+                tampilDataSMasuk();
                 JOptionPane.showMessageDialog(this, "Data Berhasil Di Tambahkan");
             }
         } catch (Exception e) {
@@ -457,12 +488,12 @@ public class frameSuratMasuk extends javax.swing.JFrame {
             if ((txt_kd_masuk.getText().isEmpty()) &&  (txt_tgl_masuk.getText().isEmpty()) &&  (txt_no_masuk.getText().isEmpty()) &&  (txt_pengirim.getText().isEmpty()) &&  (txta_perihal.getText().isEmpty()) &&  (txt_scan.getText().isEmpty()) &&  (txt_kodepegawai.getText().isEmpty()) &&  (txt_tgl_disposisi.getText().isEmpty()) &&  (txt_kodejabatan.getText().isEmpty()) && (txta_ket.getText().isEmpty()) &&  (txt_kdadmin.getText().isEmpty())) {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu!");
             } else {
-            String[] FieldTabelnya ={"tgl_inputsuratmasuk", "no_suratmasuk", "pengirim_suratmasuk", "perihal_suratmasuk", "scan_suratmasuk", "kd_pegawai", };
-            String[] Isitabelnya = {txt_tgl_masuk.getText(), txt_no_masuk.getText(), txt_pengirim.getText(), txta_perihal.getText(), txt_scan.getText(), txt_kodepegawai.getText(), txt_tgl_disposisi.getText(), txt_kodejabatan.getText(),  txta_ket.getText(), txt_kdadmin.getText()};
-            String NamaTabel = "tbl_suratmasuk";
+                String[] FieldTabelnya ={"tgl_inputsuratmasuk", "no_suratmasuk", "pengirim_suratmasuk", "perihal_suratmasuk", "scan_suratmasuk", "kd_pegawai", "tgl_disposisi", "kd_jabatan", "keterangan", "kd_admin"};
+                String[] Isitabelnya = {txt_tgl_masuk.getText(), txt_no_masuk.getText(), txt_pengirim.getText(), txta_perihal.getText(), txt_scan.getText(), txt_kodepegawai.getText(), txt_tgl_disposisi.getText(), txt_kodejabatan.getText(),  txta_ket.getText(), txt_kdadmin.getText()};
+                String NamaTabel = "tbl_suratmasuk";
                 String kd_key = txt_kd_masuk.getText();
-                obj.UbahDBAuto(NamaTabel, "kd_admin", kd_key, FieldTabelnya, Isitabelnya);
-                tampilDataAdmin();
+                obj.UbahDBAuto(NamaTabel, "kd_suratmasuk", kd_key, FieldTabelnya, Isitabelnya);
+                tampilDataSMasuk();
                 JOptionPane.showMessageDialog(this, "Data Berhasil Di Ubah!");
             }
         } catch (Exception e) {
@@ -475,12 +506,12 @@ public class frameSuratMasuk extends javax.swing.JFrame {
         try {
             if ((txt_kd_masuk.getText().isEmpty()) &&  (txt_tgl_masuk.getText().isEmpty()) &&  (txt_no_masuk.getText().isEmpty()) &&  (txt_pengirim.getText().isEmpty()) &&  (txta_perihal.getText().isEmpty()) &&  (txt_scan.getText().isEmpty()) &&  (txt_kodepegawai.getText().isEmpty()) &&  (txt_tgl_disposisi.getText().isEmpty()) &&  (txt_kodejabatan.getText().isEmpty()) && (txta_ket.getText().isEmpty()) &&  (txt_kdadmin.getText().isEmpty())) {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Yang Akan Di Hapus Terlebih Dahulu!");
-                jTableSKeluar.requestFocus();
+                jTableSMasuk.requestFocus();
             } else {
-                String NamaTabel = "tbl_admin";
+                String NamaTabel = "tbl_suratmasuk";
                 String kd_key = txt_kd_masuk.getText();
                 obj.HapusDBAuto(NamaTabel, "kd_suratmasuk", kd_key);
-                tampilDataAdmin();
+                tampilDataSMasuk();
                 JOptionPane.showMessageDialog(this, "Data Berhasil Di Hapus!");
             }
         } catch (Exception e) {
@@ -496,19 +527,19 @@ public class frameSuratMasuk extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_tgl_disposisiActionPerformed
 
-    private void jTableSKeluarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSKeluarMouseClicked
-        int i = jTableSKeluar.getSelectedRow();
-        String kd_suratmasuk = jTableSKeluar.getValueAt(i, 0).toString();
-        String tgl_inputsuratmasuk = jTableSKeluar.getValueAt(i, 1).toString();
-        String no_suratmasuk = jTableSKeluar.getValueAt(i, 2).toString();
-        String pengirim_suratmasuk = jTableSKeluar.getValueAt(i, 3).toString();
-        String perihal_suratmasuk = jTableSKeluar.getValueAt(i, 4).toString();
-        String scan_suratmasuk = jTableSKeluar.getValueAt(i, 5).toString();
-        String kd_pegawai = jTableSKeluar.getValueAt(i, 6).toString();
-        String tgl_disposisi = jTableSKeluar.getValueAt(i, 7).toString();
-        String kd_jabatan = jTableSKeluar.getValueAt(i, 8).toString();
-        String keterangan = jTableSKeluar.getValueAt(i, 9).toString();
-        String kd_admin = jTableSKeluar.getValueAt(i, 10).toString();
+    private void jTableSMasukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSMasukMouseClicked
+        int i = jTableSMasuk.getSelectedRow();
+        String kd_suratmasuk = jTableSMasuk.getValueAt(i, 0).toString();
+        String tgl_inputsuratmasuk = jTableSMasuk.getValueAt(i, 1).toString();
+        String no_suratmasuk = jTableSMasuk.getValueAt(i, 2).toString();
+        String pengirim_suratmasuk = jTableSMasuk.getValueAt(i, 3).toString();
+        String perihal_suratmasuk = jTableSMasuk.getValueAt(i, 4).toString();
+        String scan_suratmasuk = jTableSMasuk.getValueAt(i, 5).toString();
+        String kd_pegawai = jTableSMasuk.getValueAt(i, 6).toString();
+        String tgl_disposisi = jTableSMasuk.getValueAt(i, 7).toString();
+        String kd_jabatan = jTableSMasuk.getValueAt(i, 8).toString();
+        String keterangan = jTableSMasuk.getValueAt(i, 9).toString();
+        String kd_admin = jTableSMasuk.getValueAt(i, 10).toString();
         
         txt_kd_masuk.setText(kd_suratmasuk);
         txt_tgl_masuk.setText(tgl_inputsuratmasuk);
@@ -521,7 +552,7 @@ public class frameSuratMasuk extends javax.swing.JFrame {
         txt_kodejabatan.setText(kd_jabatan);
         txta_ket.setText(keterangan);
         txt_kdadmin.setText(kd_admin);
-    }//GEN-LAST:event_jTableSKeluarMouseClicked
+    }//GEN-LAST:event_jTableSMasukMouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String clear = "";
@@ -557,14 +588,27 @@ public class frameSuratMasuk extends javax.swing.JFrame {
 
             String[] JudulKolom = {"kode surat","tgl input","no","pengirim", "perihal", "scan", "kode pegawai", "tgl disposisi", "kode jabatan", "keterangan", "kode admin"}; //kolom yang akan di tampilkan
             int[] lebar ={50, 100, 50, 150, 150, 50, 50, 100, 50, 150, 50}; //lebar masing-masing kolom
-            obj.JudulJTable(jTableSKeluar, JudulKolom); //judul kolom
-            obj.tampilTable(JudulKolom, searchQuery, jTableSKeluar); //isi tabel
-            obj.LebarJtable(jTableSKeluar, lebar); //lebar kolom
+            obj.JudulJTable(jTableSMasuk, JudulKolom); //judul kolom
+            obj.tampilTable(JudulKolom, searchQuery, jTableSMasuk); //isi tabel
+            obj.LebarJtable(jTableSMasuk, lebar); //lebar kolom
 
         } catch (Exception e) {
             System.err.println(e.toString());
         }
     }//GEN-LAST:event_txtCariKeyPressed
+
+    private void jReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jReportActionPerformed
+        String cari = txtCari.getText();
+        String searchQuery = "SELECT * FROM tbl_suratmasuk WHERE kd_suratmasuk LIKE '%" + cari + "%' OR " +
+                "no_suratmasuk LIKE '%" + cari + "%' OR " +
+                "pengirim_suratmasuk LIKE '%" + cari + "%' OR " +
+                "perihal_suratmasuk LIKE '%" + cari + "%' OR " +
+                "scan_suratmasuk LIKE '%" + cari + "%' OR " +
+                "kd_pegawai LIKE '%" + cari + "%' OR " +
+                "keterangan LIKE '%" + cari + "%' OR " +
+                "kd_admin LIKE '%" + cari + "%'";
+        obj.tampilLaporan("src/report/lapSuratMasuk.jrxml", searchQuery);
+    }//GEN-LAST:event_jReportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -612,6 +656,8 @@ public class frameSuratMasuk extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -620,11 +666,13 @@ public class frameSuratMasuk extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JButton jReport;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTableSKeluar;
+    private javax.swing.JTable jTableSMasuk;
+    private javax.swing.JLabel lblJmlData;
     private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txt_kd_masuk;
     private javax.swing.JTextField txt_kdadmin;
