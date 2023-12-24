@@ -305,6 +305,7 @@ public class frameAdmin extends javax.swing.JFrame {
                     txtUsername.setText(rslt.getString(4));
                     txtPassword.setText(rslt.getString(5));
                 } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(this, e.toString());
                 }
             } else {
                 obj.simpanDBAuto(NamaTabel, FieldTabelnya, Isitabelnya);
