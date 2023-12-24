@@ -3,63 +3,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package forms;
-import dataBase.koneksi;
-import java.sql.PreparedStatement;
+import dataBase.configdb_2110010302;
+import java.sql.*;
 import javax.swing.JOptionPane;
-import java.sql.ResultSet;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Administrator 10
  */
 public class frameSppd extends javax.swing.JFrame {
-    koneksi objekku;
-    DefaultTableModel modelTabelSppd;
+    configdb_2110010302 obj;
+    
+    public void tampilDataSppd(){
+        String[] JudulKolom = {"Kode", "No SPPD", "Kode Pegawai", "Tanggal", "Tempat", "Kendaraan", "Biaya", "Tgl Input", "Kode Admin", "Scan"}; //kolom yang akan di tampilkan
+        int[] lebar ={50, 50, 75, 100, 150, 100, 100, 100, 50, 75}; //lebar masing-masing kolom
+        String query = "SELECT * FROM tbl_sppd";
+        obj.JudulJTable(jTableSppd, JudulKolom); //judul kolom
+        obj.tampilTable(JudulKolom, query, jTableSppd); //isi tabel
+        obj.LebarJtable(jTableSppd, lebar); //lebar kolom
+        lblJmlData.setText(String.valueOf(obj.jumlahRecord(query)));
+    }
+    
     public frameSppd() {
         initComponents();
         this.setLocationRelativeTo(null);
-        objekku = new koneksi();
-        jTableSppd.setModel(modelTabelSppd);
+        obj = new configdb_2110010302();
+        tampilDataSppd();
         
-        modelTabelSppd.addColumn("kd_sppd");
-        modelTabelSppd.addColumn("no_sppd");
-        modelTabelSppd.addColumn("kd_pegawai");
-        modelTabelSppd.addColumn("tgl_sppd");
-        modelTabelSppd.addColumn("tempat_sppd");
-        modelTabelSppd.addColumn("kendaraan_sppd");
-        modelTabelSppd.addColumn("biaya_sppd");
-        modelTabelSppd.addColumn("tgl_inputsppd");
-        modelTabelSppd.addColumn("kd_admin");
-        modelTabelSppd.addColumn("scan_sppd");
     }
-    
-    void loadTableSppd(){
-        try {
-            String sql = "SELECT * FROM tbl_sppd";
-            PreparedStatement kueri = objekku.konekDB.prepareCall(sql);
-            ResultSet data = kueri.executeQuery();
-            
-            while (data.next()){
-                Object[] baris = new Object[10];
-                baris[0] = data.getString("kd_sppd");
-                baris[1] = data.getString("no_sppd");
-                baris[2] = data.getString("kd_pegawai");
-                baris[3] = data.getString("tgl_sppd");
-                baris[4] = data.getString("tempat_sppd");
-                baris[5] = data.getString("kendaraan_sppd");
-                baris[6] = data.getString("biaya_sppd");
-                baris[7] = data.getString("tgl_inputsppd");
-                baris[8] = data.getString("kd_admin");
-                baris[9] = data.getString("scan_sppd");
-                
-                modelTabelSppd.addRow(baris);
-            }
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,6 +69,12 @@ public class frameSppd extends javax.swing.JFrame {
         txt_tgl_sppd = new javax.swing.JTextField();
         txt_sppd_in = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        lblJmlData = new javax.swing.JLabel();
+        txtCari = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jReport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -221,6 +198,38 @@ public class frameSppd extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         jLabel14.setText("*dalam format tahun-bulan-tanggal (tttt-bb-hh)");
 
+        jButton4.setText("CLEAR");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("JUMLAH DATA:");
+
+        lblJmlData.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblJmlData.setText("\"\"");
+
+        txtCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCariActionPerformed(evt);
+            }
+        });
+        txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCariKeyPressed(evt);
+            }
+        });
+
+        jLabel12.setText("CARI DATA");
+
+        jReport.setText("REPORT");
+        jReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jReportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -228,54 +237,70 @@ public class frameSppd extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(81, 81, 81)
-                                .addComponent(txt_scan))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel5))
+                                .addGap(24, 24, 24)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(34, 34, 34)
+                                        .addComponent(jLabel10)
+                                        .addGap(81, 81, 81)
+                                        .addComponent(txt_scan))
+                                    .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                            .addComponent(txt_kodeadmin)
-                                            .addComponent(txt_biaya)
-                                            .addComponent(txt_kendaraan)
-                                            .addComponent(txt_kd_pegawai)
-                                            .addComponent(txt_kd_sppd)
-                                            .addComponent(txt_no_sppd, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(txt_sppd_in, javax.swing.GroupLayout.Alignment.TRAILING)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(36, 36, 36)
-                                        .addComponent(txt_tgl_sppd, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 783, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel1)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jLabel9)
+                                            .addComponent(jLabel8)
+                                            .addComponent(jLabel5))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(34, 34, 34)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                                    .addComponent(txt_kodeadmin)
+                                                    .addComponent(txt_biaya)
+                                                    .addComponent(txt_kendaraan)
+                                                    .addComponent(txt_kd_pegawai)
+                                                    .addComponent(txt_kd_sppd)
+                                                    .addComponent(txt_no_sppd, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(txt_sppd_in, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(36, 36, 36)
+                                                .addComponent(txt_tgl_sppd, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 783, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblJmlData))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCari))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSimpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnUbah)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnHapus))
+                            .addComponent(jReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(btnSimpan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnUbah)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnHapus)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,20 +344,33 @@ public class frameSppd extends javax.swing.JFrame {
                             .addComponent(txt_sppd_in, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(11, 11, 11)
                         .addComponent(jLabel14)))
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txt_kodeadmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(txt_kodeadmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(txt_scan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_scan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(lblJmlData))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSimpan)
                     .addComponent(btnUbah)
                     .addComponent(btnHapus))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jReport))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         pack();
@@ -360,6 +398,9 @@ public class frameSppd extends javax.swing.JFrame {
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         try {
+            String[] FieldTabelnya ={"kd_sppd", "no_sppd", "kd_pegawai", "tgl_sppd", "tempat_sppd", "kendaraan_sppd", "biaya_sppd", "tgl_inputsppd", "kd_admin", "scan_sppd"};
+            String[] Isitabelnya = {txt_kd_sppd.getText(), txt_no_sppd.getText(), txt_kd_pegawai.getText(), txt_tgl_sppd.getText(), txta_tempat.getText(), txt_kendaraan.getText(), txt_biaya.getText(), txt_sppd_in.getText(), txt_kodeadmin.getText(), txt_scan.getText()};
+            String NamaTabel = "tbl_sppd";
             if (txt_kd_sppd.getText().isEmpty()){
                 JOptionPane.showMessageDialog(this, "Kode SPPD Belum Di Isi!");
                 txt_kd_sppd.requestFocus();
@@ -390,38 +431,28 @@ public class frameSppd extends javax.swing.JFrame {
             } else if (txt_scan.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Scan SPPD Belum Di Isi!");
                 txt_scan.requestFocus();
-            } else {
-                String sqlCari = "SELECT * FROM tbl_sppd WHERE kd_sppd = ?";
-                PreparedStatement cari = objekku.konekDB.prepareStatement(sqlCari);
-                cari.setString(1, txt_kd_sppd.getText());
-                ResultSet hasil = cari.executeQuery();
-                if (hasil.next()){
-                    JOptionPane.showMessageDialog(this, "Kode SPPD SUDAH ADA!");
-                    txt_kd_sppd.setText(hasil.getString("kd_sppd"));
-                    txt_no_sppd.setText(hasil.getString("no_sppd"));
-                    txt_kd_pegawai.setText(hasil.getString("kd_pegawai"));
-                    txt_tgl_sppd.setText(hasil.getString("tgl_sppd"));
-                    txta_tempat.setText(hasil.getString("tempat_sppd"));
-                    txt_kendaraan.setText(hasil.getString("kendaraan_sppd"));
-                    txt_biaya.setText(hasil.getString("biaya_sppd"));
-                    txt_sppd_in.setText(hasil.getString("tgl_inputsppd"));
-                    txt_kodeadmin.setText(hasil.getString("kd_admin"));
-                    txt_scan.setText(hasil.getString("scan_sppd"));
-                } else {
-                    String sqlSimpan = "INSERT INTO tbl_sppd VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                    PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlSimpan);
-                    
-                    kueri.setString(1, txt_kd_sppd.getText());
-                    kueri.setString(2, txt_no_sppd.getText());
-                    kueri.setString(3, txt_kd_pegawai.getText());
-                    kueri.setString(4, txt_tgl_sppd.getText());
-                    kueri.setString(5, txta_tempat.getText());
-                    kueri.setString(6, txt_kendaraan.getText());
-                    kueri.setString(7, txt_biaya.getText());
-                    kueri.setString(8, txt_sppd_in.getText());
-                    kueri.setString(9, txt_kodeadmin.getText());
-                    kueri.setString(10, txt_scan.getText());
+            } else if (obj.duplikasiKey(NamaTabel, NamaTabel, NamaTabel)){
+                try {
+                    Statement stm = obj.getKoneksi().createStatement();
+                    ResultSet rslt = stm.executeQuery("SELECT * FROM tbl_sppd WHERE kd_admin = "+txt_kd_sppd.getText());
+                    rslt.next();
+                    txt_kd_sppd.setText(rslt.getString(2));
+                    txt_no_sppd.setText(rslt.getString(3));
+                    txt_kd_pegawai.setText(rslt.getString(4));
+                    txt_tgl_sppd.setText(rslt.getString(5));
+                    txta_tempat.setText(rslt.getString(6));
+                    txt_kendaraan.setText(rslt.getString(7));
+                    txt_biaya.setText(rslt.getString(8));
+                    txt_sppd_in.setText(rslt.getString(8));
+                    txt_kodeadmin.setText(rslt.getString(10));
+                    txt_scan.setText(rslt.getString(11));                    
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e.toString());
                 }
+            } else {
+                obj.simpanDBAuto(NamaTabel, FieldTabelnya, Isitabelnya);
+                tampilDataSppd();
+                JOptionPane.showMessageDialog(this, "Data Berhasil Di Simpan, YAY!");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.toString());
@@ -430,22 +461,18 @@ public class frameSppd extends javax.swing.JFrame {
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
         try {
-            String sqlUbah = "UPDATE tbl_sddp SET no_sppd = ?, kd_pegawai = ?, tgl_sppd = ?, tempat_sppd = ?, kendaraan_sppd = ?, biaya_sppd = ? tgl_inputsppd = ?, kd_admin = ?, scan_sppd = ? WHERE kd_sppd = ?";
-            PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlUbah);
-            
-            kueri.setString(1, txt_kd_sppd.getText());
-            kueri.setString(2, txt_no_sppd.getText());
-            kueri.setString(3, txt_kd_pegawai.getText());
-            kueri.setString(4, txt_tgl_sppd.getText());
-            kueri.setString(5, txta_tempat.getText());
-            kueri.setString(6, txt_kendaraan.getText());
-            kueri.setString(7, txt_biaya.getText());
-            kueri.setString(8, txt_sppd_in.getText());
-            kueri.setString(9, txt_kodeadmin.getText());
-            kueri.setString(10, txt_scan.getText());
-            
-            kueri.executeUpdate();
-            loadTableSppd();
+            if ((txt_kd_sppd.getText().isEmpty()) && (txt_no_sppd.getText().isEmpty()) && (txt_kd_pegawai.getText().isEmpty()) && (txt_tgl_sppd.getText().isEmpty()) && (txta_tempat.getText().isEmpty()) && (txt_kendaraan.getText().isEmpty()) && (txt_biaya.getText().isEmpty()) && (txt_sppd_in.getText().isEmpty()) && (txt_kodeadmin.getText().isEmpty()) && (txt_scan.getText().isEmpty())) {
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu!");
+                jTableSppd.requestFocus();
+            } else {
+                String[] FieldTabelnya ={"no_sppd", "kd_pegawai", "tgl_sppd", "tempat_sppd", "kendaraan_sppd", "biaya_sppd", "tgl_inputsppd", "kd_admin", "scan_sppd"};
+                String[] Isitabelnya = {txt_no_sppd.getText(), txt_kd_pegawai.getText(), txt_tgl_sppd.getText(), txta_tempat.getText(), txt_kendaraan.getText(), txt_biaya.getText(), txt_sppd_in.getText(), txt_kodeadmin.getText(), txt_scan.getText()};
+                String NamaTabel = "tbl_sppd";
+                String kd_key = txt_kd_sppd.getText();
+                obj.UbahDBAuto(NamaTabel, "kd_sppd", kd_key, FieldTabelnya, Isitabelnya);
+                tampilDataSppd();
+                JOptionPane.showMessageDialog(this, "Data Berhasil Di Ubah!");
+            }
             JOptionPane.showMessageDialog(this, "Data Berhasil di Ubah!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.toString());
@@ -454,13 +481,16 @@ public class frameSppd extends javax.swing.JFrame {
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         try {
-            String sqlHapus = "DELETE FROM tbl_sppd WHERE kd_sppd = ?";
-            PreparedStatement kueri = objekku.konekDB.prepareStatement(sqlHapus);
-            kueri.setString(1, txt_kd_sppd.getText());
-        
-            kueri.executeUpdate();
-            loadTableSppd();
-            JOptionPane.showMessageDialog(this, "Data Berhasil Di Hapus!");
+            if ((txt_kd_sppd.getText().isEmpty()) && (txt_no_sppd.getText().isEmpty()) && (txt_kd_pegawai.getText().isEmpty()) && (txt_tgl_sppd.getText().isEmpty()) && (txta_tempat.getText().isEmpty()) && (txt_kendaraan.getText().isEmpty()) && (txt_biaya.getText().isEmpty()) && (txt_sppd_in.getText().isEmpty()) && (txt_kodeadmin.getText().isEmpty()) && (txt_scan.getText().isEmpty())) {
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Yang Akan Di Hapus Terlebih Dahulu!");
+                jTableSppd.requestFocus();
+            } else {
+                String NamaTabel = "tbl_sppd";
+                String kd_key = txt_kd_sppd.getText();
+                obj.HapusDBAuto(NamaTabel, "kd_sppd", kd_key);
+                tampilDataSppd();
+                JOptionPane.showMessageDialog(this, "Data Berhasil Di Hapus!");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.toString());
         }
@@ -508,6 +538,53 @@ public class frameSppd extends javax.swing.JFrame {
         txt_scan.setText(scan_sppd);
     }//GEN-LAST:event_jTableSppdMouseClicked
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String clear = "";
+        txt_kd_sppd.setText(clear);
+        txt_no_sppd.setText(clear);
+        txt_kd_pegawai.setText(clear);
+        txt_tgl_sppd.setText(clear);
+        txta_tempat.setText(clear);
+        txt_kendaraan.setText(clear);
+        txt_biaya.setText(clear);
+        txt_sppd_in.setText(clear);
+        txt_kodeadmin.setText(clear);
+        txt_scan.setText(clear);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCariActionPerformed
+
+    private void txtCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyPressed
+        try {
+            String cari = txtCari.getText();
+            String query =  "SELECT * FROM tbl_sppd WHERE kd_sppd LIKE '%" + cari + "%' OR " +
+                            "no_sppd LIKE '%" + cari + "%' OR " +
+                            "kd_pegawai LIKE '%" + cari + "%' OR " +
+                            "tempat_sppd LIKE '%" + cari + "%' OR " +
+                            "kendaraan_sppd LIKE '%" + cari + "%' OR " +
+                            "biaya_sppd LIKE '%" + cari + "%' OR " +
+                            "kd_admin LIKE '%" + cari + "%' OR " +
+                            "scan_sppd LIKE '%" + cari + "%'";
+            
+            String[] JudulKolom = {"Kode", "No SPPD", "Kode Pegawai", "Tanggal", "Tempat", "Kendaraan", "Biaya", "Tgl Input", "Kode Admin", "Scan"}; //kolom yang akan di tampilkan
+            int[] lebar ={50, 50, 75, 100, 150, 100, 100, 100, 50, 75}; //lebar masing-masing kolom
+            obj.JudulJTable(jTableSppd, JudulKolom); //judul kolom
+            obj.tampilTable(JudulKolom, query, jTableSppd); //isi tabel
+            obj.LebarJtable(jTableSppd, lebar); //lebar kolom
+
+        } catch (Exception e) {
+            System.err.println(e.toString());
+        }
+    }//GEN-LAST:event_txtCariKeyPressed
+
+    private void jReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jReportActionPerformed
+        String cari = txtCari.getText();
+        String SQL = "SELECT * FROM tbl_admin WHERE kd_admin LIKE '%"+cari+"%' OR nama_admin LIKE '%"+cari+"%' OR username_admin LIKE '%"+cari+"%'";
+        obj.tampilLaporan("src/report/lapAdmin.jrxml", SQL);
+    }//GEN-LAST:event_jReportActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -548,8 +625,11 @@ public class frameSppd extends javax.swing.JFrame {
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JButton btnUbah;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
@@ -560,10 +640,13 @@ public class frameSppd extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JButton jReport;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableSppd;
+    private javax.swing.JLabel lblJmlData;
+    private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txt_biaya;
     private javax.swing.JTextField txt_kd_pegawai;
     private javax.swing.JTextField txt_kd_sppd;
