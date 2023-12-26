@@ -19,8 +19,8 @@ public class framePegawai extends javax.swing.JFrame {
      */
     public void tampilDataPegawai(){
         String[] JudulKolom = {"kd_pegawai", "nama_pegawai", "kd_jabatan", "password_pegawai", "foto_pegawai"};
-        int[] lebar = {100, 200, 200, 100, 200, 100};
-        String query = "SELECT * From tbl_admin";
+        int[] lebar = {100, 200, 200, 100, 200};
+        String query = "SELECT * From tbl_pegawai";
         obj.JudulJTable(jTablePegawai, JudulKolom);
         obj.tampilTable(JudulKolom, query, jTablePegawai);
         obj.LebarJtable(jTablePegawai, lebar);
@@ -374,7 +374,7 @@ public class framePegawai extends javax.swing.JFrame {
         String nama_pegawai = jTablePegawai.getValueAt(i, 1).toString();
         String kd_jabatan = jTablePegawai.getValueAt(i, 2).toString();
         String password_pegawai = jTablePegawai.getValueAt(i, 3).toString();
-        String foto_pegawai = jTablePegawai.getValueAt(i, 3).toString();
+        String foto_pegawai = jTablePegawai.getValueAt(i, 4).toString();
         
         txtKd.setText(kd_pegawai);
         txtNama.setText(nama_pegawai);
@@ -398,7 +398,7 @@ public class framePegawai extends javax.swing.JFrame {
             String SQL = "SELECT * FROM tbl_pegawai WHERE kd_pegawai LIKE '%"+cari+"%' OR nama_pegawai LIKE '%"+cari+"%' OR kd_jabatan LIKE '%"+cari+"%'";
             
             String[] JudulKolom = {"kd_pegawai", "nama_pegawai", "kd_jabatan", "password_pegawai", "foto_pegawai"};
-            int[] lebar = {100, 200, 200, 100, 200, 100};
+            int[] lebar = {100, 200, 200, 100, 200};
             obj.JudulJTable(jTablePegawai, JudulKolom);
             obj.tampilTable(JudulKolom, SQL, jTablePegawai);
             obj.LebarJtable(jTablePegawai, lebar);

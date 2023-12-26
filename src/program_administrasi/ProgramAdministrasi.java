@@ -4,9 +4,7 @@
  */
 package program_administrasi;
 import dataBase.configdb_2110010302;
-import forms.frameAdmin;
-import forms.frameJabatan;
-import forms.framePegawai;
+import forms.frameUtama;
 /**
  *
  * @author hakase
@@ -17,7 +15,7 @@ public class ProgramAdministrasi {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new frameAdmin().setVisible(true);
+        new frameUtama().setVisible(true);
     }
     
 }
